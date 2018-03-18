@@ -1,0 +1,44 @@
+{
+    "name": "konekt/gears",
+    "description": "Settings and User Preferences handling library for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["settings", "preferences", "laravel", "konekt", "artkonekt"],
+    "support": {
+        "source": "https://github.com/artkonekt/gears"
+    },
+    "authors": [
+        {
+            "name": "Attila Fulop",
+            "homepage": "https://github.com/fulopattila122"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "illuminate/database": "~5.4",
+        "illuminate/support": "~5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "6.2 - 7.0",
+        "orchestra/testbench": "^3.4.2",
+        "illuminate/events": "~5.4"
+    },
+    "autoload": {
+        "psr-4": { "Konekt\\Gears\\": "src/" },
+        "files": [
+            "src/Support/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Konekt\\Gears\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Konekt\\Gears\\Providers\\GearsServiceProvider"
+            ]
+        }
+    }
+}
