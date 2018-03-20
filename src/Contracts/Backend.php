@@ -54,8 +54,6 @@ interface Backend
      *
      * @param string $key
      * @param mixed  $value
-     *
-     * @return mixed
      */
     public function setSetting($key, $value);
 
@@ -65,8 +63,51 @@ interface Backend
      * @param string $key
      * @param mixed  $value
      * @param int    $userId
-     *
-     * @return mixed
      */
     public function setPreference($key, $value, $userId);
+
+    /**
+     * Set the values of multiple settings at once
+     *
+     * @param array $settings Pass key/value pairs
+     */
+    public function setSettings(array $settings);
+
+    /**
+     * Set the values of multiple preferences for a single user at once
+     *
+     * @param array $preferences Pass key/value pairs
+     * @param int   $userId
+     */
+    public function setPreferences(array $preferences, $userId);
+
+    /**
+     * Deletes the value for a specific setting
+     *
+     * @param string $key
+     */
+    public function removeSetting($key);
+
+    /**
+     * Deletes the value for a specific preference
+     *
+     * @param string $key
+     * @param int    $userId
+     */
+    public function removePreference($key, $userId);
+
+    /**
+     * Deletes values of multiple settings at once
+     *
+     * @param array $keys
+     */
+    public function removeSettings(array $keys);
+
+    /**
+     * Deletes values of multiple preferences for a single user at once
+     *
+     * @param array $keys
+     * @param int   $userId
+     */
+    public function removePreferences(array $keys, $userId);
 }

@@ -28,7 +28,7 @@ class SettingsRegistry extends BaseRegistry
      *
      * @return Setting|null
      */
-    public function get($key)
+    public function get(string $key)
     {
         return parent::get($key);
     }

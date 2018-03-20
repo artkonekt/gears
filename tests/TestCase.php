@@ -62,6 +62,7 @@ abstract class TestCase extends Orchestra
         $app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
+            $table->timestamps();
         });
 
         \Artisan::call('migrate', ['--force' => true]);

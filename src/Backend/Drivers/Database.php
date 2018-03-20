@@ -49,9 +49,9 @@ class Database implements Backend
     public function getSetting(string $key)
     {
         $result = DB::table(self::SETTINGS_TABLE_NAME)
-                   ->select('value')
-                   ->where('id', $key)
-                   ->first();
+                    ->select('value')
+                    ->where('id', $key)
+                    ->first();
 
         return $result ? $result->value : null;
     }
@@ -62,10 +62,10 @@ class Database implements Backend
     public function getPreference($key, $userId)
     {
         $result = DB::table(self::PREFERENCES_TABLE_NAME)
-                   ->select('value')
-                   ->where('key', $key)
-                   ->where('user_id', $userId)
-                   ->first();
+                    ->select('value')
+                    ->where('key', $key)
+                    ->where('user_id', $userId)
+                    ->first();
 
         return $result ? $result->value : null;
     }
@@ -87,6 +87,31 @@ class Database implements Backend
     /**
      * @inheritDoc
      */
+    public function setSettings(array $settings)
+    {
+        DB::transaction(function () use ($settings){
+            foreach ($settings as $key => $value) {
+                $this->setSetting($key, $value);
+            }
+        });
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setPreferences(array $preferences, $userId)
+    {
+        DB::transaction(function () use ($preferences, $userId){
+            foreach ($preferences as $key => $value) {
+                $this->setPreference($key, $value, $userId);
+            }
+        });
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function setPreference($key, $value, $userId)
     {
         $lookup = [
@@ -97,5 +122,49 @@ class Database implements Backend
         DB::table(self::PREFERENCES_TABLE_NAME)->updateOrInsert($lookup, [
             'value' => $value
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeSetting($key)
+    {
+        DB::table(self::SETTINGS_TABLE_NAME)->where('id', $key)->delete();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removePreference($key, $userId)
+    {
+        DB::table(self::PREFERENCES_TABLE_NAME)
+          ->where([
+              'key'     => $key,
+              'user_id' => $userId
+          ])->delete();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeSettings(array $keys)
+    {
+        DB::transaction(function () use ($keys){
+            foreach ($keys as $key) {
+                $this->removeSetting($key);
+            }
+        });
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removePreferences(array $keys, $userId)
+    {
+        DB::transaction(function () use ($keys, $userId){
+            foreach ($keys as $key) {
+                $this->removePreference($key, $userId);
+            }
+        });
     }
 }
