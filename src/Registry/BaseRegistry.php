@@ -11,6 +11,8 @@
 
 namespace Konekt\Gears\Registry;
 
+use Konekt\Gears\Contracts\Cog;
+
 abstract class BaseRegistry
 {
     /** @var \Illuminate\Support\Collection */
@@ -29,6 +31,16 @@ abstract class BaseRegistry
     public function all()
     {
         return $this->items->all();
+    }
+
+    /**
+     * Returns all the defaults of the registered items
+     */
+    public function allDefaults()
+    {
+        return $this->items->map(function(Cog $item) {
+            return $item->default();
+        })->all();
     }
 
     /**

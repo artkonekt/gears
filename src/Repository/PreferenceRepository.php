@@ -42,9 +42,11 @@ class PreferenceRepository
      */
     public function get($key, $user = null)
     {
-        $this->verifyOrFail($key);
+        $preference = $this->getPreferenceOrFail($key);
 
-        return $this->backend->getPreference($key, $this->getUserId($user));
+        $value = $this->backend->getPreference($key, $this->getUserId($user));
+
+        return  is_null($value) ? $preference->default() : $value;
     }
 
     /**
@@ -57,7 +59,7 @@ class PreferenceRepository
      */
     public function set($key, $value, $user = null)
     {
-        $this->verifyOrFail($key);
+        $this->getPreferenceOrFail($key);
 
         $this->backend->setPreference($key, $value, $this->getUserId($user));
     }
@@ -71,7 +73,7 @@ class PreferenceRepository
      */
     public function forget($key, $user = null)
     {
-        $this->verifyOrFail($key);
+        $this->getPreferenceOrFail($key);
 
         $this->backend->removePreference($key, $this->getUserId($user));
     }
@@ -85,9 +87,10 @@ class PreferenceRepository
      */
     public function all($user = null)
     {
-        return $this->backend
-            ->allPreferences($this->getUserId($user))
-            ->all();
+        return array_merge(
+            $this->registry->allDefaults(),
+            $this->backend->allPreferences($this->getUserId($user))->all()
+        );
     }
 
     /**
@@ -100,7 +103,7 @@ class PreferenceRepository
     public function update(array $preferences, $user = null)
     {
         foreach ($preferences as $key => $value) {
-            $this->verifyOrFail($key);
+            $this->getPreferenceOrFail($key);
         }
 
         $this->backend->setPreferences($preferences, $this->getUserId($user));
@@ -116,7 +119,7 @@ class PreferenceRepository
     public function delete(array $keys, $user = null)
     {
         foreach ($keys as $key) {
-            $this->verifyOrFail($key);
+            $this->getPreferenceOrFail($key);
         }
 
         $this->backend->removePreferences($keys, $this->getUserId($user));
@@ -134,12 +137,14 @@ class PreferenceRepository
     }
 
     /**
-     * Checks if preferemce with the given key was registered and throws an exception if not
+     * Returns the preference registered with the given key and throws an exception if not found
      *
      * @param string $key
+     *
+     * @return \Konekt\Gears\Contracts\Preference
      * @throws UnregisteredPreferenceException
      */
-    protected function verifyOrFail(string $key)
+    protected function getPreferenceOrFail(string $key)
     {
         if (!$this->registry->has($key)) {
             throw new UnregisteredPreferenceException(
@@ -149,6 +154,8 @@ class PreferenceRepository
                 )
             );
         }
+
+        return $this->registry->get($key);
     }
 
 }

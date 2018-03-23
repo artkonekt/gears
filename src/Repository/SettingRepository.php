@@ -39,9 +39,11 @@ class SettingRepository
      */
     public function get($key)
     {
-        $this->verifyOrFail($key);
+        $setting = $this->getSettingOrFail($key);
 
-        return $this->backend->getSetting($key);
+        $value = $this->backend->getSetting($key);
+
+        return  is_null($value) ? $setting->default() : $value;
     }
 
     /**
@@ -53,7 +55,7 @@ class SettingRepository
      */
     public function set($key, $value)
     {
-        $this->verifyOrFail($key);
+        $this->getSettingOrFail($key);
 
         $this->backend->setSetting($key, $value);
     }
@@ -66,7 +68,7 @@ class SettingRepository
      */
     public function forget($key)
     {
-        $this->verifyOrFail($key);
+        $this->getSettingOrFail($key);
 
         $this->backend->removeSetting($key);
     }
@@ -78,7 +80,10 @@ class SettingRepository
      */
     public function all()
     {
-        return $this->backend->allSettings()->all();
+        return array_merge(
+            $this->registry->allDefaults(),
+            $this->backend->allSettings()->all()
+        );
     }
 
     /**
@@ -90,7 +95,7 @@ class SettingRepository
     public function update(array $settings)
     {
         foreach ($settings as $key => $value) {
-            $this->verifyOrFail($key);
+            $this->getSettingOrFail($key);
         }
 
         $this->backend->setSettings($settings);
@@ -105,19 +110,21 @@ class SettingRepository
     public function delete(array $keys)
     {
         foreach ($keys as $key) {
-            $this->verifyOrFail($key);
+            $this->getSettingOrFail($key);
         }
 
         $this->backend->removeSettings($keys);
     }
 
     /**
-     * Checks if setting with the given key was registered and throws an exception if not
+     * Returns the setting registered with the given key and throws and exception if it doesn't exist
      *
      * @param string $key
+     *
+     * @return \Konekt\Gears\Contracts\Setting
      * @throws UnregisteredSettingException
      */
-    protected function verifyOrFail(string $key)
+    protected function getSettingOrFail(string $key)
     {
         if (!$this->registry->has($key)) {
             throw new UnregisteredSettingException(
@@ -127,5 +134,7 @@ class SettingRepository
                     )
             );
         }
+
+        return $this->registry->get($key);
     }
 }

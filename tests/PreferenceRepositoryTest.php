@@ -119,16 +119,16 @@ class PreferenceRepositoryTest extends TestCase
         $this->registry->addByKey('zweite');
         $this->registry->addByKey('dritte');
 
-        $this->assertCount(0, $this->repo->all($uid));
+        $this->assertCount(3, $this->repo->all($uid));
 
         $this->repo->set('erste', 1, $uid);
         $this->repo->set('zweite', 22, $uid);
 
-        $this->assertCount(2, $this->repo->all($uid));
+        $this->assertCount(3, $this->repo->all($uid));
 
         $this->repo->set('zweite', 2, $uid);
 
-        $this->assertCount(2, $this->repo->all($uid));
+        $this->assertCount(3, $this->repo->all($uid));
 
         $this->repo->set('dritte', 3, $uid);
 
@@ -199,10 +199,10 @@ class PreferenceRepositoryTest extends TestCase
         $this->repo->delete(['knees', 'toes'], $uid);
 
         $settings = $this->repo->all($uid);
-        $this->assertCount(2, $settings);
+        $this->assertCount(4, $settings);
 
-        $this->assertArrayNotHasKey('knees', $settings);
-        $this->assertArrayNotHasKey('toes', $settings);
+        $this->assertNull($settings['knees']);
+        $this->assertNull($settings['toes']);
 
         $this->assertNull($this->repo->get('knees', $uid));
         $this->assertNull($this->repo->get('toes', $uid));

@@ -12,9 +12,11 @@
 namespace Konekt\Gears\Tests;
 
 use Konekt\Gears\Backend\Drivers\Database;
+use Konekt\Gears\Defaults\SimpleSetting;
 use Konekt\Gears\Exceptions\UnregisteredSettingException;
 use Konekt\Gears\Registry\SettingsRegistry;
 use Konekt\Gears\Repository\SettingRepository;
+use Konekt\Gears\Tests\Mocks\SettingWithDefault;
 
 class SettingRepositoryTest extends TestCase
 {
@@ -70,6 +72,16 @@ class SettingRepositoryTest extends TestCase
     /**
      * @test
      */
+    public function get_method_returns_the_default_value_of_an_unset_setting()
+    {
+        $this->registry->add(new SimpleSetting('http.port', 80));
+
+        $this->assertEquals(80, $this->repo->get('http.port'));
+    }
+
+    /**
+     * @test
+     */
     public function values_of_registered_settings_can_be_deleted()
     {
         $this->registry->addByKey('memory');
@@ -94,16 +106,20 @@ class SettingRepositoryTest extends TestCase
         $this->registry->addByKey('second');
         $this->registry->addByKey('third');
 
-        $this->assertCount(0, $this->repo->all());
+        $this->assertCount(3, $this->repo->all());
+        $this->assertNull($this->repo->all()['first']);
+        $this->assertNull($this->repo->all()['second']);
+        $this->assertNull($this->repo->all()['third']);
 
         $this->repo->set('first', 1);
         $this->repo->set('second', 22);
 
-        $this->assertCount(2, $this->repo->all());
+        $this->assertCount(3, $this->repo->all());
+        $this->assertEquals(22, $this->repo->all()['second']);
 
         $this->repo->set('second', 2);
 
-        $this->assertCount(2, $this->repo->all());
+        $this->assertCount(3, $this->repo->all());
 
         $this->repo->set('third', 3);
 
@@ -112,6 +128,19 @@ class SettingRepositoryTest extends TestCase
         $this->assertEquals(1, $allSettings['first']);
         $this->assertEquals(2, $allSettings['second']);
         $this->assertEquals(3, $allSettings['third']);
+    }
+
+    /**
+     * @test
+     */
+    public function all_method_returns_the_defaults_for_settings_that_have_no_saved_values()
+    {
+        $this->registry->addByKey('simple');
+        $this->registry->add(new SimpleSetting('has_default', 'def value'));
+
+        $this->assertCount(2, $this->repo->all());
+        $this->assertNull($this->repo->get('simple'));
+        $this->assertEquals('def value', $this->repo->get('has_default'));
     }
 
     /**
@@ -169,10 +198,10 @@ class SettingRepositoryTest extends TestCase
         $this->repo->delete(['knees', 'toes']);
 
         $settings = $this->repo->all();
-        $this->assertCount(2, $settings);
+        $this->assertCount(4, $settings);
 
-        $this->assertArrayNotHasKey('knees', $settings);
-        $this->assertArrayNotHasKey('toes', $settings);
+        $this->assertNull($settings['knees']);
+        $this->assertNull($settings['toes']);
 
         $this->assertNull($this->repo->get('knees'));
         $this->assertNull($this->repo->get('toes'));
