@@ -57,6 +57,4 @@ class ConfigurationWithDbBackendTest extends TestCase
             )
         );
     }
-
-
 }

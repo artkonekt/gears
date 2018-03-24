@@ -26,23 +26,23 @@ class GearsServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(dirname(__DIR__) . '/resources/database/');
 
-        $this->app->singleton('gears.backend', function() {
+        $this->app->singleton('gears.backend', function () {
             return BackendFactory::create($this->config('driver', self::DEFAULT_BACKEND_DRIVER));
         });
 
-        $this->app->singleton('gears.settings_registry', function() {
+        $this->app->singleton('gears.settings_registry', function () {
             return new SettingsRegistry();
         });
 
-        $this->app->singleton('gears.preferences_registry', function() {
+        $this->app->singleton('gears.preferences_registry', function () {
             return new PreferencesRegistry();
         });
 
-        $this->app->singleton('gears.settings', function($app) {
+        $this->app->singleton('gears.settings', function ($app) {
             return new SettingRepository($app['gears.backend'], $app['gears.settings_registry']);
         });
 
-        $this->app->singleton('gears.preferences', function($app) {
+        $this->app->singleton('gears.preferences', function ($app) {
             return new PreferenceRepository($app['gears.backend'], $app['gears.preferences_registry']);
         });
     }

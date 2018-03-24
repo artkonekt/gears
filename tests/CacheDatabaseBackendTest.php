@@ -204,7 +204,6 @@ class CacheDatabaseBackendTest extends TestCase
         // Value should be the cached one
         $all = $this->backend->allPreferences($uid);
         $this->assertEquals('X', $all->get('x'));
-
     }
 
     /**
@@ -355,8 +354,8 @@ class CacheDatabaseBackendTest extends TestCase
     {
         $schumacher = 1969;
         $this->backend->setPreferences([
-            'mclaren' => 'silver',
-            'benetton' => 'blue',
+            'mclaren'    => 'silver',
+            'benetton'   => 'blue',
             'ferrari'    => 'red'
         ], $schumacher);
 
@@ -383,7 +382,7 @@ class CacheDatabaseBackendTest extends TestCase
     {
         parent::setUp();
 
-        $this->db = new Database();
+        $this->db      = new Database();
         $this->backend = new CachedDatabase(
             $this->app->make(Repository::class),
             $this->db

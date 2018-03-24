@@ -40,7 +40,7 @@ class SettingsRegistry extends BaseRegistry
      *
      * @return Setting Returns the created and registered Setting object
      */
-    function addByKey(string $key): Setting
+    public function addByKey(string $key): Setting
     {
         $setting = new SimpleSetting($key);
 

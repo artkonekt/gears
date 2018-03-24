@@ -144,7 +144,7 @@ class PreferenceRepositoryTest extends TestCase
      */
     public function values_of_registered_preferences_can_be_mass_updated()
     {
-        $user = new \stdClass();
+        $user     = new \stdClass();
         $user->id = 35;
 
         $this->registry->addByKey('sechs');
@@ -153,8 +153,8 @@ class PreferenceRepositoryTest extends TestCase
 
         $this->repo->update([
             'sechs'   => 6,
-            'sieben' => 7,
-            'acht' => 8
+            'sieben'  => 7,
+            'acht'    => 8
         ], $user);
 
         $allSettings = $this->repo->all($user);
@@ -167,7 +167,7 @@ class PreferenceRepositoryTest extends TestCase
 
         $this->repo->update([
             'sieben' => 71,
-            'acht' => 82
+            'acht'   => 82
         ], $user);
 
         $this->assertEquals(6, $this->repo->get('sechs', $user));

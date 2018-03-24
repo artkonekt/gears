@@ -157,5 +157,4 @@ class PreferenceRepository
 
         return $this->registry->get($key);
     }
-
 }

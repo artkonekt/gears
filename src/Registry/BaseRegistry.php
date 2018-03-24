@@ -38,7 +38,7 @@ abstract class BaseRegistry
      */
     public function allDefaults()
     {
-        return $this->items->map(function(Cog $item) {
+        return $this->items->map(function (Cog $item) {
             return $item->default();
         })->all();
     }
@@ -83,5 +83,5 @@ abstract class BaseRegistry
      * @param string $key
      * @return mixed
      */
-    abstract function addByKey(string $key);
+    abstract public function addByKey(string $key);
 }

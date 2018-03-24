@@ -41,5 +41,4 @@ class BackendFactory
 
         return app()->make($class);
     }
-
 }

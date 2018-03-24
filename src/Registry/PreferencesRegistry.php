@@ -40,7 +40,7 @@ class PreferencesRegistry extends BaseRegistry
      *
      * @return Preference Returns the created and registered Setting object
      */
-    function addByKey(string $key): Preference
+    public function addByKey(string $key): Preference
     {
         $setting = new SimplePreference($key);
 

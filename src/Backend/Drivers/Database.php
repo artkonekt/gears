@@ -89,7 +89,7 @@ class Database implements Backend
      */
     public function setSettings(array $settings)
     {
-        DB::transaction(function () use ($settings){
+        DB::transaction(function () use ($settings) {
             foreach ($settings as $key => $value) {
                 $this->setSetting($key, $value);
             }
@@ -101,7 +101,7 @@ class Database implements Backend
      */
     public function setPreferences(array $preferences, $userId)
     {
-        DB::transaction(function () use ($preferences, $userId){
+        DB::transaction(function () use ($preferences, $userId) {
             foreach ($preferences as $key => $value) {
                 $this->setPreference($key, $value, $userId);
             }
@@ -149,7 +149,7 @@ class Database implements Backend
      */
     public function removeSettings(array $keys)
     {
-        DB::transaction(function () use ($keys){
+        DB::transaction(function () use ($keys) {
             foreach ($keys as $key) {
                 $this->removeSetting($key);
             }
@@ -161,7 +161,7 @@ class Database implements Backend
      */
     public function removePreferences(array $keys, $userId)
     {
-        DB::transaction(function () use ($keys, $userId){
+        DB::transaction(function () use ($keys, $userId) {
             foreach ($keys as $key) {
                 $this->removePreference($key, $userId);
             }

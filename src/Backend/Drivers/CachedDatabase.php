@@ -38,7 +38,7 @@ class CachedDatabase implements Backend
      */
     public function allSettings(): Collection
     {
-        return $this->cache->remember($this->skey('*'), self::TTL, function() {
+        return $this->cache->remember($this->skey('*'), self::TTL, function () {
             return $this->db->allSettings();
         });
     }
@@ -48,7 +48,7 @@ class CachedDatabase implements Backend
      */
     public function allPreferences($userId): Collection
     {
-        return $this->cache->remember($this->pkey('*', $userId), self::TTL, function() use ($userId) {
+        return $this->cache->remember($this->pkey('*', $userId), self::TTL, function () use ($userId) {
             return $this->db->allPreferences($userId);
         });
     }
@@ -58,7 +58,7 @@ class CachedDatabase implements Backend
      */
     public function getSetting(string $key)
     {
-        return $this->cache->remember($this->skey($key), self::TTL, function() use ($key) {
+        return $this->cache->remember($this->skey($key), self::TTL, function () use ($key) {
             return $this->db->getSetting($key);
         });
     }
@@ -68,7 +68,7 @@ class CachedDatabase implements Backend
      */
     public function getPreference($key, $userId)
     {
-        return $this->cache->remember($this->pkey($key, $userId), self::TTL, function() use ($key, $userId) {
+        return $this->cache->remember($this->pkey($key, $userId), self::TTL, function () use ($key, $userId) {
             return $this->db->getPreference($key, $userId);
         });
     }
