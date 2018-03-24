@@ -17,8 +17,8 @@ use Konekt\Gears\Contracts\Backend;
 
 class CachedDatabase implements Backend
 {
-    const SETTINGS_KEY_PREFIX    = 'settings.';
-    const PREFERENCES_KEY_PREFIX = 'preferences.of';
+    const SETTINGS_KEY_PREFIX    = 'settings::';
+    const PREFERENCES_KEY_PREFIX = 'preferences::of';
     const TTL                    = 43800; // 1 month in minutes
 
     /** @var Database */

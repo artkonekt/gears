@@ -20,7 +20,7 @@ use Konekt\Gears\Repository\SettingRepository;
 
 class GearsServiceProvider extends ServiceProvider
 {
-    const DEFAULT_BACKEND_DRIVER = 'database';
+    const DEFAULT_BACKEND_DRIVER = 'cached_database';
 
     public function register()
     {

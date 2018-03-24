@@ -67,12 +67,4 @@ abstract class TestCase extends Orchestra
 
         \Artisan::call('migrate', ['--force' => true]);
     }
-
-    /**
-     * @inheritdoc
-     */
-    protected function resolveApplicationConfiguration($app)
-    {
-        parent::resolveApplicationConfiguration($app);
-    }
 }
