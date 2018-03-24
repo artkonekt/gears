@@ -25,7 +25,7 @@ class BackendFactory
     public static function create(string $driver) : Backend
     {
         if (strpos($driver, '\\') === false) {
-            $class = __NAMESPACE__ . '\\Drivers\\' . ucfirst($driver);
+            $class = __NAMESPACE__ . '\\Drivers\\' . studly_case($driver);
         } else {
             $class = $driver;
         }

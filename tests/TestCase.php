@@ -74,8 +74,5 @@ abstract class TestCase extends Orchestra
     protected function resolveApplicationConfiguration($app)
     {
         parent::resolveApplicationConfiguration($app);
-//        $app['config']->set('key', [
-//            //value
-//        ]);
     }
 }
