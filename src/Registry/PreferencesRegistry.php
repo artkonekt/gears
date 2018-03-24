@@ -28,7 +28,7 @@ class PreferencesRegistry extends BaseRegistry
      *
      * @return Preference|null
      */
-    public function get($key)
+    public function get(string $key)
     {
         return parent::get($key);
     }

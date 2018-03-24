@@ -32,13 +32,13 @@ class PreferencesFacadeTest extends TestCase
     {
         $uid = 1127;
         /** @var PreferencesRegistry $registry */
-        $registry = $this->app->get('gears.preferences_registry');
+        $registry = $this->app->make('gears.preferences_registry');
 
         $registry->addByKey('fast_food');
         Preferences::set('fast_food', 'kebab', $uid);
         $this->assertEquals('kebab', Preferences::get('fast_food', $uid));
 
-        $this->app->get('gears.preferences_registry')->addByKey('slow_food');
+        $this->app->make('gears.preferences_registry')->addByKey('slow_food');
         Preferences::set('slow_food', 'goulash stew', $uid);
         $this->assertEquals('goulash stew', Preferences::get('slow_food', $uid));
     }
@@ -51,7 +51,7 @@ class PreferencesFacadeTest extends TestCase
         $mario = 1981;
         $luigi = 1983;
 
-        $this->app->get('gears.preferences_registry')->addByKey('favorite_platform');
+        $this->app->make('gears.preferences_registry')->addByKey('favorite_platform');
 
         Preferences::set('favorite_platform', 'stripe', $mario);
         Preferences::set('favorite_platform', 'braintree', $luigi);

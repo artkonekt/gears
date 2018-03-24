@@ -31,13 +31,13 @@ class SettingsFacadeTest extends TestCase
     public function the_settings_facade_uses_the_common_settings_registry()
     {
         /** @var SettingsRegistry $registry */
-        $registry = $this->app->get('gears.settings_registry');
+        $registry = $this->app->make('gears.settings_registry');
 
         $registry->addByKey('hello');
         Settings::set('hello', 'world');
         $this->assertEquals('world', Settings::get('hello'));
 
-        $this->app->get('gears.settings_registry')->addByKey('ola');
+        $this->app->make('gears.settings_registry')->addByKey('ola');
         Settings::set('ola', 'mundo');
         $this->assertEquals('mundo', Settings::get('ola'));
     }
@@ -47,7 +47,7 @@ class SettingsFacadeTest extends TestCase
      */
     public function the_settings_facade_provides_access_to_all_the_methods_of_settings_repository()
     {
-        $this->app->get('gears.settings_registry')->addByKey('magento');
+        $this->app->make('gears.settings_registry')->addByKey('magento');
 
         Settings::set('magento', 'ecommerce');
         $this->assertEquals('ecommerce', Settings::get('magento'));

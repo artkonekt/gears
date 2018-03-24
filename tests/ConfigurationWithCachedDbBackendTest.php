@@ -29,7 +29,7 @@ class ConfigurationWithCachedDbBackendTest extends TestCase
      */
     public function the_backend_is_the_class_of_database_driver()
     {
-        $this->assertInstanceOf(CachedDatabase::class, $this->app->get('gears.backend'));
+        $this->assertInstanceOf(CachedDatabase::class, $this->app->make('gears.backend'));
     }
 
     /**
@@ -38,7 +38,7 @@ class ConfigurationWithCachedDbBackendTest extends TestCase
     public function settings_are_saved_to_the_database_but_not_to_the_cache()
     {
         /** @var SettingsRegistry $registry */
-        $registry = $this->app->get('gears.settings_registry');
+        $registry = $this->app->make('gears.settings_registry');
         $registry->addByKey('random_key');
         
         Settings::set('random_key', 'Rnd_value');

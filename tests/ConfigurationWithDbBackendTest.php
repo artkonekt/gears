@@ -28,7 +28,7 @@ class ConfigurationWithDbBackendTest extends TestCase
      */
     public function the_backend_is_the_class_of_database_driver()
     {
-        $this->assertInstanceOf(Database::class, $this->app->get('gears.backend'));
+        $this->assertInstanceOf(Database::class, $this->app->make('gears.backend'));
     }
 
     /**
@@ -37,7 +37,7 @@ class ConfigurationWithDbBackendTest extends TestCase
     public function settings_are_saved_to_the_database_but_not_to_the_cache()
     {
         /** @var SettingsRegistry $registry */
-        $registry = $this->app->get('gears.settings_registry');
+        $registry = $this->app->make('gears.settings_registry');
         $registry->addByKey('testing.is.like.icecream');
 
         Settings::set('testing.is.like.icecream', 'What??');
