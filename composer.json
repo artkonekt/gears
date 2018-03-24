@@ -1,6 +1,6 @@
 {
     "name": "konekt/gears",
-    "description": "Settings and User Preferences handling library for Laravel",
+    "description": "Settings and User Preferences library for Laravel",
     "type": "library",
     "license": "MIT",
     "keywords": ["settings", "preferences", "laravel", "konekt", "artkonekt"],

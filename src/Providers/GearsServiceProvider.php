@@ -51,5 +51,4 @@ class GearsServiceProvider extends ServiceProvider
     {
         return config('gears.' . $key, $default);
     }
-
 }
