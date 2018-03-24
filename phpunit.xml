@@ -3,8 +3,7 @@
     phpunit -c phpunit.xml
 -->
 <phpunit colors="true"
-         bootstrap="./vendor/autoload.php"
-         printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer">
+         bootstrap="./vendor/autoload.php">
     <testsuites>
         <testsuite name="Settings and Preferences Test Suite">
             <directory suffix=".php">./tests</directory>
