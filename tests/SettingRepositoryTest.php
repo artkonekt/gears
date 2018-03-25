@@ -195,7 +195,7 @@ class SettingRepositoryTest extends TestCase
 
         $this->assertCount(4, $this->repo->all());
 
-        $this->repo->delete(['knees', 'toes']);
+        $this->repo->reset(['knees', 'toes']);
 
         $settings = $this->repo->all();
         $this->assertCount(4, $settings);

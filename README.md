@@ -211,7 +211,7 @@ var_dump(Settings::all());
 //     'billing_address' => 'Bernauer Str. 12, Berlin, Germany'
 // ]
 
-Settings::delete(['billing_name', 'billing_address']);
+Settings::reset(['billing_name', 'billing_address']);
 
 var_dump(Settings::all());
 // [
@@ -271,7 +271,7 @@ var_dump(Preferences::all($userId));
 // ]
 
 // Reset multiple preferences at once:
-Preferences::delete(['color_scheme', 'font'], $userId);
+Preferences::reset(['color_scheme', 'font'], $userId);
 var_dump(Preferences::all($userId));
 // [
 //     'color_scheme' => NULL,

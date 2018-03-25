@@ -71,7 +71,7 @@ class PreferencesFacadeTest extends TestCase
         $this->assertArrayHasKey('favorite_platform', Preferences::all($mario));
         $this->assertEquals('paypal', Preferences::all($mario)['favorite_platform']);
 
-        Preferences::delete(['favorite_platform'], $mario);
+        Preferences::reset(['favorite_platform'], $mario);
         $this->assertArrayHasKey('favorite_platform', Preferences::all($mario));
         $this->assertNull(Preferences::all($mario)['favorite_platform']);
     }

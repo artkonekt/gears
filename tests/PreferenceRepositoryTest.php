@@ -196,7 +196,7 @@ class PreferenceRepositoryTest extends TestCase
 
         $this->assertCount(4, $this->repo->all($uid));
 
-        $this->repo->delete(['knees', 'toes'], $uid);
+        $this->repo->reset(['knees', 'toes'], $uid);
 
         $settings = $this->repo->all($uid);
         $this->assertCount(4, $settings);

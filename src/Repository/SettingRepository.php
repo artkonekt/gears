@@ -102,12 +102,12 @@ class SettingRepository
     }
 
     /**
-     * Delete values of multiple settings at once.
+     * Reset values of multiple settings at once.
      *
      * @param array $keys Pass an array of keys
      * @throws UnregisteredSettingException
      */
-    public function delete(array $keys)
+    public function reset(array $keys)
     {
         foreach ($keys as $key) {
             $this->getSettingOrFail($key);

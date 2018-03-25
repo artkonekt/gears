@@ -59,7 +59,7 @@ class SettingsFacadeTest extends TestCase
         $this->assertArrayHasKey('magento', Settings::all());
         $this->assertEquals('Zend', Settings::all()['magento']);
 
-        Settings::delete(['magento']);
+        Settings::reset(['magento']);
         $this->assertArrayHasKey('magento', Settings::all());
         $this->assertNull(Settings::all()['magento']);
     }

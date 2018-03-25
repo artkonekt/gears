@@ -110,13 +110,13 @@ class PreferenceRepository
     }
 
     /**
-     * Delete values of multiple preferences at once.
+     * Reset values of multiple preferences at once.
      *
      * @param array $keys Pass an array of keys
      * @param int|Authenticatable|null $user
      * @throws UnregisteredPreferenceException
      */
-    public function delete(array $keys, $user = null)
+    public function reset(array $keys, $user = null)
     {
         foreach ($keys as $key) {
             $this->getPreferenceOrFail($key);
