@@ -92,6 +92,7 @@ use \Konekt\Gears\Defaults\SimpleSetting;
 /** @var \Konekt\Gears\Registry\SettingsRegistry $settingsRegistry */
 $settingsRegistry = app('gears.settings_registry');
 
+// Default theme is dark, available options are dark and light
 $settingsRegistry->add(new SimpleSetting('theme', 'dark', ['dark', 'light']));
 ```
 
@@ -108,7 +109,7 @@ $prefsRegistry->addByKey('secondary_email');
 // Defining a default ('en'):
 $prefsRegistry->add(new SimplePreference('language', 'en'));
 
-// Defining a default and a list of available options:
+// Defining a default (yellow) and 3 available options:
 $prefsRegistry->add(new SimplePreference('color_scheme', 'yellow', ['green', 'red', 'yellow']));
 ```
 
@@ -278,3 +279,61 @@ var_dump(Preferences::all($userId));
 //     'font' => NULL,
 // ]
 ```
+
+## Building UI
+
+### Draft
+
+Tree
+│
+└─> Node
+    │
+    └─> Node
+        │
+        └─> Item
+            │
+            └─> Widget
+            └─> Preference|Setting <- name it as?
+
+Node
+
+  - id
+  - label
+  - parent
+  - items(): Collection of 'Item's (widget + setting/preference)
+
+Tree (Node repository, in fact)
+  - level(): Collection of nodes /root = level(0)/
+
+PreferencesTree
+SettingsTree
+
+Tree::addRootNode(Node $node)
+Tree::createRootNode($id, $label)
+
+Node::addChildNode(Node $node)
+Node::createChildNode($id, $label)
+Node::addItem(Item $item)
+Node::createItem('component', 'preference')
+
+// In ctrlr
+$preferenceTree = PreferencesTree::rootNodes()
+
+Item:
+  - widget
+  - preference|setting:Cog
+
+Widget:
+  - component
+  - attributes: k/v array
+
+
+// In view
+
+foreach $preferenceTree as $tab
+    foreach $tab->childNodes() as $group
+        foreach $group->items() as $item
+            @component($item->widget->component(), ['preference' => $item->preference(), 'widget' => $item->widget()])
+            @endcomponent
+
+
