@@ -284,6 +284,7 @@ var_dump(Preferences::all($userId));
 
 ### Draft
 
+```
 Tree
 │
 └─> Node
@@ -294,6 +295,7 @@ Tree
             │
             └─> Widget
             └─> Preference|Setting <- name it as?
+```
 
 Node
 
@@ -330,10 +332,14 @@ Widget:
 
 // In view
 
-foreach $preferenceTree as $tab
-    foreach $tab->childNodes() as $group
-        foreach $group->items() as $item
+```blade
+@foreach $preferenceTree as $tab
+    @foreach $tab->childNodes() as $group
+        @foreach $group->items() as $item
             @component($item->widget->component(), ['preference' => $item->preference(), 'widget' => $item->widget()])
             @endcomponent
-
+        @endforeach
+    @endforeach
+@endforeach
+```
 

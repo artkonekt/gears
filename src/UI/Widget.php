@@ -19,7 +19,7 @@ class Widget
     /** @var array */
     private $attributes;
 
-    public function __construct($component, array $attributes = [])
+    public function __construct(string $component, array $attributes = [])
     {
         $this->component  = $component;
         $this->attributes = $attributes;
