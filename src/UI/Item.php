@@ -19,21 +19,25 @@ class Item
 {
     /** @var Widget */
     private $widget;
-    /**
-     * @var Cog
-     */
+
+    /** @var Cog */
     private $cog;
+
+    /** @var mixed */
+    private $value;
 
     /**
      * Item constructor.
      *
      * @param string|array|Widget $widget
      * @param Cog                 $cog
+     * @param null                $value
      */
-    public function __construct($widget, Cog $cog)
+    public function __construct($widget, Cog $cog, $value = null)
     {
         $this->widget = $widget instanceof Widget ? $widget : $this->createWidget($widget);
         $this->cog    = $cog;
+        $this->value  = is_null($value) ? $cog->default() : $value;
     }
 
     /**
@@ -55,6 +59,16 @@ class Item
     public function getSetting()
     {
         return $this->getCog() instanceof Setting ? $this->getCog() : null;
+    }
+
+    /**
+     * Returns the value of the setting or preference
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**

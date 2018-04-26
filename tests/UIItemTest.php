@@ -81,4 +81,28 @@ class UIItemTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Preference::class, $itemWithPreference->getPreference());
         $this->assertNull($itemWithSetting->getPreference());
     }
+
+    /**
+     * @test
+     */
+    public function it_has_a_value()
+    {
+        $itemWithSetting = new Item('text', new SimpleSetting('api_key'), 'fedbca9876543210');
+        $itemWithPreference = new Item('text', new SimplePreference('color_scheme'), 'green');
+
+        $this->assertEquals('fedbca9876543210', $itemWithSetting->getValue());
+        $this->assertEquals('green', $itemWithPreference->getValue());
+    }
+
+    /**
+     * @test
+     */
+    public function returns_the_default_value_if_value_has_not_been_explicitly_set()
+    {
+        $itemWithSetting = new Item('checkbox', new SimpleSetting('use_https', true));
+        $itemWithPreference = new Item('text', new SimplePreference('theme', 'dark'));
+
+        $this->assertEquals(true, $itemWithSetting->getValue());
+        $this->assertEquals('dark', $itemWithPreference->getValue());
+    }
 }
