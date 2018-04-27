@@ -12,6 +12,8 @@
 namespace Konekt\Gears\UI;
 
 use Illuminate\Support\Collection;
+use Konekt\Gears\Contracts\Preference;
+use Konekt\Gears\Contracts\Setting;
 
 class Node
 {
@@ -79,6 +81,15 @@ class Node
         }
     }
 
+    public function createChild(string $id, string $label = null)
+    {
+        $child = new static($id, $label);
+
+        $this->addChild($child);
+
+        return $child;
+    }
+
     public function removeChild(Node $child)
     {
         $this->children->forget($child->id());
@@ -104,15 +115,33 @@ class Node
         return $this->children->all();
     }
 
-    public function addItem(Item $item)
+    public function addItem(BaseItem $item)
     {
         $this->items->push($item);
     }
 
-    public function removeItem(Item $item)
+    public function createSettingItem($widget, Setting $setting, $value = null): SettingItem
     {
-        $this->items = $this->items->reject(function(Item $value, $key) use ($item) {
-            return $value->getCog()->key() == $item->getCog()->key();
+        $item = new SettingItem($widget, $setting, $value);
+
+        $this->items->push($item);
+
+        return $item;
+    }
+
+    public function createPreferenceItem($widget, Preference $preference, $value = null): PreferenceItem
+    {
+        $item = new PreferenceItem($widget, $preference, $value);
+
+        $this->items->push($item);
+
+        return $item;
+    }
+
+    public function removeItem(BaseItem $item)
+    {
+        $this->items = $this->items->reject(function(BaseItem $value, $key) use ($item) {
+            return $value->getKey() == $item->getKey();
         });
     }
 

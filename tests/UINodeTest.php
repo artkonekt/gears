@@ -13,8 +13,9 @@ namespace Konekt\Gears\Tests;
 
 use Konekt\Gears\Defaults\SimplePreference;
 use Konekt\Gears\Defaults\SimpleSetting;
-use Konekt\Gears\UI\Item;
 use Konekt\Gears\UI\Node;
+use Konekt\Gears\UI\PreferenceItem;
+use Konekt\Gears\UI\SettingItem;
 
 class UINodeTest extends \PHPUnit\Framework\TestCase
 {
@@ -89,6 +90,20 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
+    public function child_node_can_be_created_with_it()
+    {
+        $node = new Node('parent');
+        $child = $node->createChild('child_id', 'Child Label');
+
+        $this->assertInstanceOf(Node::class, $child);
+        $this->assertCount(1, $node->children());
+        $this->assertContains($child, $node->children());
+        $this->assertEquals($node, $child->getParent());
+    }
+
+    /**
+     * @test
+     */
     public function child_nodes_can_be_returned_by_their_ids()
     {
         $child1 = new Node('child1');
@@ -156,14 +171,43 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_can_have_items()
+    public function it_has_items()
     {
         $node = new Node('hello');
-        $item = new Item('text', new SimpleSetting('setting'), 'Hello, mi?');
 
-        $node->addItem($item);
-
+        $settingItem = new SettingItem('text', new SimpleSetting('setting'), 'Hello, mi?');
+        $node->addItem($settingItem);
         $this->assertCount(1, $node->items());
+
+        $preferenceItem = new PreferenceItem('text', new SimplePreference('preferred_city'), 'Czikago');
+        $node->addItem($preferenceItem);
+        $this->assertCount(2, $node->items());
+    }
+
+    /**
+     * @test
+     */
+    public function setting_items_can_be_created_with_it()
+    {
+        $node = new Node('vader', 'Darth Vader');
+
+        $item = $node->createSettingItem('text', new SimpleSetting('setting.key'));
+
+        $this->assertInstanceOf(SettingItem::class, $item);
+        $this->assertContains($item, $node->items());
+    }
+
+    /**
+     * @test
+     */
+    public function preference_items_can_be_created_with_it()
+    {
+        $node = new Node('mader', 'Light Mader');
+
+        $item = $node->createPreferenceItem('text', new SimplePreference('pref.key'));
+
+        $this->assertInstanceOf(PreferenceItem::class, $item);
+        $this->assertContains($item, $node->items());
     }
 
     /**
@@ -172,8 +216,8 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
     public function items_can_be_returned_as_array()
     {
         $node = new Node('Group 1');
-        $item1 = new Item('text', new SimpleSetting('setting 1'));
-        $item2 = new Item('text', new SimpleSetting('setting 2'));
+        $item1 = new SettingItem('text', new SimpleSetting('setting 1'));
+        $item2 = new SettingItem('text', new SimpleSetting('setting 2'));
 
         $node->addItem($item1);
         $node->addItem($item2);
@@ -188,8 +232,8 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
     public function items_with_settings_can_be_removed()
     {
         $node = new Node('Settings');
-        $settingItem1 = new Item('checkbox', new SimpleSetting('setting1'));
-        $settingItem2 = new Item('text', new SimpleSetting('setting2'));
+        $settingItem1 = new SettingItem('checkbox', new SimpleSetting('setting1'));
+        $settingItem2 = new SettingItem('text', new SimpleSetting('setting2'));
 
         $node->addItem($settingItem1);
         $node->addItem($settingItem2);
@@ -209,8 +253,8 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
     public function items_with_preferences_can_be_removed()
     {
         $node = new Node('Preferences');
-        $prefItem1 = new Item('checkbox', new SimplePreference('pref1'));
-        $pretItem2 = new Item('text', new SimplePreference('pref2'));
+        $prefItem1 = new PreferenceItem('checkbox', new SimplePreference('pref1'));
+        $pretItem2 = new PreferenceItem('text', new SimplePreference('pref2'));
 
         $node->addItem($prefItem1);
         $node->addItem($pretItem2);

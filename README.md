@@ -295,6 +295,7 @@ Tree
             │
             └─> Widget
             └─> Preference|Setting <- name it as?
+            └─> Value
 ```
 
 Node

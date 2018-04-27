@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the Item class.
+ * Contains the BaseItem class.
  *
  * @copyright   Copyright (c) 2018 Attila Fulop
  * @author      Attila Fulop
@@ -12,10 +12,8 @@
 namespace Konekt\Gears\UI;
 
 use Konekt\Gears\Contracts\Cog;
-use Konekt\Gears\Contracts\Preference;
-use Konekt\Gears\Contracts\Setting;
 
-class Item
+abstract class BaseItem
 {
     /** @var Widget */
     private $widget;
@@ -48,19 +46,6 @@ class Item
         return $this->widget;
     }
 
-    public function getCog(): Cog
-    {
-        return $this->cog;
-    }
-
-    /**
-     * @return Setting|null
-     */
-    public function getSetting()
-    {
-        return $this->getCog() instanceof Setting ? $this->getCog() : null;
-    }
-
     /**
      * Returns the value of the setting or preference
      *
@@ -72,11 +57,18 @@ class Item
     }
 
     /**
-     * @return Preference|null
+     * Returns the setting or preference key
+     *
+     * @return string
      */
-    public function getPreference()
+    public function getKey()
     {
-        return $this->getCog() instanceof Preference ? $this->getCog() : null;
+        return $this->cog->key();
+    }
+
+    protected function getCog(): Cog
+    {
+        return $this->cog;
     }
 
     /**
@@ -84,7 +76,7 @@ class Item
      *
      * @return Widget
      */
-    private function createWidget($widget): Widget
+    protected function createWidget($widget): Widget
     {
         if (is_string($widget)) {
             return new Widget($widget);
