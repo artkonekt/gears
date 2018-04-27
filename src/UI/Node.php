@@ -140,7 +140,7 @@ class Node
 
     public function removeItem(BaseItem $item)
     {
-        $this->items = $this->items->reject(function(BaseItem $value, $key) use ($item) {
+        $this->items = $this->items->reject(function (BaseItem $value, $key) use ($item) {
             return $value->getKey() == $item->getKey();
         });
     }

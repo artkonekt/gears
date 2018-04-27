@@ -65,7 +65,7 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
     public function it_can_have_a_parent_node()
     {
         $parent = new Node('general_settings_tab');
-        $child = new Node('app_settings_group');
+        $child  = new Node('app_settings_group');
         $child->setParent($parent);
 
         $this->assertEquals($parent, $child->getParent());
@@ -92,7 +92,7 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
      */
     public function child_node_can_be_created_with_it()
     {
-        $node = new Node('parent');
+        $node  = new Node('parent');
         $child = $node->createChild('child_id', 'Child Label');
 
         $this->assertInstanceOf(Node::class, $child);
@@ -147,7 +147,7 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
      */
     public function when_setting_the_parent_the_node_will_be_among_parents_children()
     {
-        $child = new Node('child');
+        $child  = new Node('child');
         $parent = new Node('parent');
 
         $child->setParent($parent);
@@ -160,7 +160,7 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
      */
     public function when_adding_a_child_the_childrens_parent_will_be_this_node()
     {
-        $nino = new Node('nino');
+        $nino  = new Node('nino');
         $padre = new Node('padre');
 
         $padre->addChild($nino);
@@ -215,7 +215,7 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
      */
     public function items_can_be_returned_as_array()
     {
-        $node = new Node('Group 1');
+        $node  = new Node('Group 1');
         $item1 = new SettingItem('text', new SimpleSetting('setting 1'));
         $item2 = new SettingItem('text', new SimpleSetting('setting 2'));
 
@@ -231,7 +231,7 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
      */
     public function items_with_settings_can_be_removed()
     {
-        $node = new Node('Settings');
+        $node         = new Node('Settings');
         $settingItem1 = new SettingItem('checkbox', new SimpleSetting('setting1'));
         $settingItem2 = new SettingItem('text', new SimpleSetting('setting2'));
 
@@ -252,7 +252,7 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
      */
     public function items_with_preferences_can_be_removed()
     {
-        $node = new Node('Preferences');
+        $node      = new Node('Preferences');
         $prefItem1 = new PreferenceItem('checkbox', new SimplePreference('pref1'));
         $pretItem2 = new PreferenceItem('text', new SimplePreference('pref2'));
 
