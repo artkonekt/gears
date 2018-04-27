@@ -110,6 +110,11 @@ class Node
         return $this->children->has($id);
     }
 
+    public function hasChildren(): bool
+    {
+        return $this->children->isNotEmpty();
+    }
+
     public function children(): array
     {
         return $this->children->all();

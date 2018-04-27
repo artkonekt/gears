@@ -61,8 +61,35 @@ class UITreeTest extends \PHPUnit\Framework\TestCase
     public function nodes_can_be_retrieved_by_id()
     {
         $tree = new Tree();
-        $node = $tree->createNode('0427');
 
-        $this->assertEquals($node, $tree->getNode('0427'));
+        $node = $tree->createNode('0427');
+        $tree->createNode('0428');
+
+        $this->assertEquals($node, $tree->findNode('0427'));
+    }
+
+    /**
+     * @test
+     */
+    public function node_can_be_found_among_child_nodes_as_well()
+    {
+        $tree = new Tree();
+        $top1 = $tree->createNode('top1');
+        $top2 = $tree->createNode('top2');
+        $top3 = $tree->createNode('top3');
+
+        $top1->createChild('top1.child1');
+        $top1->createChild('top1.child2');
+        $top1->createChild('top1.child3');
+
+        $top2->createChild('top2.child1');
+        $top2->createChild('top2.child2');
+
+        $top3->createChild('top3.child1');
+
+        $this->assertEquals('top1', $tree->findNode('top1', false)->id());
+
+        $this->assertNull($tree->findNode('top3.child1', false));
+        $this->assertEquals('top3.child1', $tree->findNode('top3.child1', true)->id());
     }
 }

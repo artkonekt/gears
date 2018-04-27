@@ -311,6 +311,59 @@ Tree (Node repository, in fact)
 PreferencesTree
 SettingsTree
 
+#### TreeBuilder
+
+`addArray($toNode)`
+`mergeArray($toNode)`
+
+```php
+// Settings array:
+[
+    'tab1' => [
+        'label' => 'Tab 1',
+        'children' => [
+            'group1' => [
+                'label' => 'Group 1',
+                'items' => [
+                    'item_1' => [
+                        'setting' => 'setting.key'                    
+                    ]
+                ]                
+            ],
+            'group2' => [
+                'label' => 'Group 2',
+                'items' => [
+                    'item_2' => [
+                        'widget' => 'text',
+                        'setting' => 'setting.key'                    
+                    ],
+                    'item_3' => [
+                        'widget' => [
+                            'text', ['class' => 'input-lg']
+                        ],
+                        'setting' => 'setting.key'                    
+                    ]
+                ]                
+            ]            
+        ]        
+    ]
+];
+
+// Preferences array:
+[
+    'tab_preferences' => [
+        'label' => 'Preferences',
+        'items' => [
+            'newsletter' => [
+                'widget' => 'checkbox',
+                'preference' => 'newsletter.pref.key' 
+            ]
+        ]        
+    ]
+];
+```
+
+
 Tree::addRootNode(Node $node)
 Tree::createRootNode($id, $label)
 

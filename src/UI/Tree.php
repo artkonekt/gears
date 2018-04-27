@@ -35,17 +35,37 @@ class Tree
     }
 
     /**
+     * Searches a node in the tree and returns it if it was found
+     *
      * @param string $id
+     * @param bool   $searchChildren
      *
      * @return Node|null
      */
-    public function getNode(string $id)
+    public function findNode(string $id, $searchChildren = false)
     {
-        return $this->nodes->get($id);
+        return $this->findByIdAmongChildren($id, $this->nodes(), $searchChildren);
     }
 
     public function nodes(): array
     {
         return $this->nodes->all();
+    }
+
+    private function findByIdAmongChildren(string $id, array $children, $recursive)
+    {
+        foreach ($children as $child) {
+            /** @var Node $child */
+            if ($id == $child->id()) {
+                return $child;
+            } elseif ($recursive && $child->hasChildren()) {
+                $node = $this->findByIdAmongChildren($id, $child->children(), $recursive);
+                if ($node) {
+                    return $node;
+                }
+            }
+        }
+
+        return null;
     }
 }
