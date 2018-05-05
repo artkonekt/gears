@@ -55,6 +55,23 @@ class UiTreeBuilderTest extends \PHPUnit\Framework\TestCase
 
         $tree = $builder->getTree();
 
-        $this->assertInstanceOf(Node::class, $tree->findNode('child'));
+        $this->assertInstanceOf(Node::class, $tree->findNode('child', true));
+    }
+
+    /**
+     * @test
+     */
+    public function setting_items_can_be_added()
+    {
+        $builder = new TreeBuilder()
+
+    }
+
+    private function getTreeBuilder()
+    {
+        return new TreeBuilder(
+
+
+        );
     }
 }

@@ -57,6 +57,20 @@ abstract class BaseItem
     }
 
     /**
+     * Returns the id of the item (gets generated from the key)
+     *
+     * @return string
+     */
+    public function getId(): string
+    {
+        return snake_case(
+            class_basename($this->getCog())
+            . '_' .
+            str_replace('.', '_', $this->getKey())
+        );
+    }
+
+    /**
      * Returns the setting or preference key
      *
      * @return string
