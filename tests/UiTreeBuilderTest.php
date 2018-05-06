@@ -11,20 +11,41 @@
 
 namespace Konekt\Gears\Tests;
 
+use Konekt\Gears\Backend\Drivers\Database;
+use Konekt\Gears\Registry\PreferencesRegistry;
+use Konekt\Gears\Registry\SettingsRegistry;
+use Konekt\Gears\Repository\PreferenceRepository;
+use Konekt\Gears\Repository\SettingRepository;
 use Konekt\Gears\UI\Node;
 use Konekt\Gears\UI\Tree;
 use Konekt\Gears\UI\TreeBuilder;
 
 class UiTreeBuilderTest extends \PHPUnit\Framework\TestCase
 {
+    /** @var SettingsRegistry */
+    private $settingsRegistry;
+
+    /** @var SettingRepository */
+    private $settingRepository;
+
+    /** @var PreferencesRegistry */
+    private $preferencesRegistry;
+
+    /** @var PreferenceRepository */
+    private $preferenceRepository;
+
+    /** @var Database */
+    private $backend;
+
+    /** @var TreeBuilder */
+    private $builder;
+
     /**
      * @test
      */
     public function it_returns_a_tree()
     {
-        $builder = new TreeBuilder();
-
-        $this->assertInstanceOf(Tree::class, $builder->getTree());
+        $this->assertInstanceOf(Tree::class, $this->builder->getTree());
     }
 
     /**
@@ -32,10 +53,9 @@ class UiTreeBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function root_level_nodes_can_be_added()
     {
-        $builder = new TreeBuilder();
-
-        $node = $builder->addRootNode('abc', 'Abc Label');
-        $tree = $builder->getTree();
+        $this->builder->addRootNode('abc', 'Abc Label');
+        $tree = $this->builder->getTree();
+        $node = $tree->findNode('abc');
 
         $this->assertEquals('abc', $node->id());
         $this->assertEquals('Abc Label', $node->label());
@@ -48,30 +68,40 @@ class UiTreeBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function child_nodes_can_be_added()
     {
-        $builder = new TreeBuilder();
+        $this->builder->addRootNode('parent', 'Tatal nostru');
+        $this->builder->addChildNode('parent', 'child', 'Copilul lui');
 
-        $builder->addRootNode('parent', 'Tatal nostru');
-        $builder->addChildNode('parent', 'child', 'Copilul lui');
-
-        $tree = $builder->getTree();
+        $tree = $this->builder->getTree();
 
         $this->assertInstanceOf(Node::class, $tree->findNode('child', true));
     }
 
     /**
-     * @test
+     * @ test
      */
     public function setting_items_can_be_added()
     {
-        $builder = new TreeBuilder()
-
+        $this->builder;
     }
 
-    private function getTreeBuilder()
+    /**
+     * @inheritDoc
+     */
+    protected function setUp()
     {
-        return new TreeBuilder(
+        parent::setUp();
 
+        $this->backend = new Database();
+        $this->settingsRegistry    = new SettingsRegistry();
+        $this->settingRepository   = new SettingRepository($this->backend, $this->settingsRegistry);
+        $this->preferencesRegistry = new PreferencesRegistry();
+        $this->preferenceRepository = new PreferenceRepository($this->backend, $this->preferencesRegistry);
 
+        $this->builder = new TreeBuilder(
+            $this->settingsRegistry,
+            $this->settingRepository,
+            $this->preferencesRegistry,
+            $this->preferenceRepository
         );
     }
 }
