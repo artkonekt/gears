@@ -313,6 +313,12 @@ SettingsTree
 
 #### TreeBuilder
 
+The tree builder is a utility to make it easier to build setting/preference trees for UI.
+
+```php
+
+```
+
 `addArray($toNode)`
 `mergeArray($toNode)`
 
@@ -363,7 +369,7 @@ SettingsTree
 ];
 ```
 
-
+```
 Tree::addRootNode(Node $node)
 Tree::createRootNode($id, $label)
 
@@ -371,6 +377,7 @@ Node::addChildNode(Node $node)
 Node::createChildNode($id, $label)
 Node::addItem(Item $item)
 Node::createItem('component', 'preference')
+```
 
 // In ctrlr
 $preferenceTree = PreferencesTree::rootNodes()

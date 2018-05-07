@@ -125,6 +125,18 @@ class Node
         $this->items->push($item);
     }
 
+    /**
+     * @param string $key
+     *
+     * @return BaseItem|null
+     */
+    public function findItemByKey(string $key)
+    {
+        return $this->items->first(function(BaseItem $item, $index) use ($key) {
+            return $item->getKey() == $key;
+        });
+    }
+
     public function createSettingItem($widget, Setting $setting, $value = null): SettingItem
     {
         $item = new SettingItem($widget, $setting, $value);

@@ -17,10 +17,11 @@ use Konekt\Gears\Registry\SettingsRegistry;
 use Konekt\Gears\Repository\PreferenceRepository;
 use Konekt\Gears\Repository\SettingRepository;
 use Konekt\Gears\UI\Node;
+use Konekt\Gears\UI\SettingItem;
 use Konekt\Gears\UI\Tree;
 use Konekt\Gears\UI\TreeBuilder;
 
-class UiTreeBuilderTest extends \PHPUnit\Framework\TestCase
+class UiTreeBuilderTest extends TestCase
 {
     /** @var SettingsRegistry */
     private $settingsRegistry;
@@ -77,17 +78,29 @@ class UiTreeBuilderTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @ test
+     * @test
      */
     public function setting_items_can_be_added()
     {
-        $this->builder;
+        $this->settingsRegistry->addByKey('my_setting1');
+        $this->settingsRegistry->addByKey('my_setting2');
+        $this->builder->addRootNode('tab1');
+        $this->builder->addSettingItem('tab1', 'text', 'my_setting1');
+        $this->builder->addSettingItem('tab1', 'text', 'my_setting2');
+
+        $tree = $this->builder->getTree();
+        $tab1 = $tree->findNode('tab1');
+
+        $this->assertCount(2, $tab1->items());
+
+        $this->assertInstanceOf(SettingItem::class, $tab1->findItemByKey('my_setting1'));
+        $this->assertInstanceOf(SettingItem::class, $tab1->findItemByKey('my_setting2'));
     }
 
     /**
      * @inheritDoc
      */
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
