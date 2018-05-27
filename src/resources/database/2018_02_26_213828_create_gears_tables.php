@@ -10,7 +10,7 @@ class CreateGearsTables extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->string('id', 512);
-            $table->text('value');
+            $table->text('value')->nullable();
             $table->timestamps();
 
             $table->primary('id');
@@ -20,7 +20,7 @@ class CreateGearsTables extends Migration
             $table->increments('id');
             $table->string('key', 512);
             $table->integer('user_id')->unsigned();
-            $table->text('value');
+            $table->text('value')->nullable();
             $table->timestamps();
 
             $table->unique(['key', 'user_id']);

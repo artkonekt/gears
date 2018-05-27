@@ -11,6 +11,7 @@
 
 namespace Konekt\Gears\Backend\Drivers;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Konekt\Gears\Contracts\Backend;
@@ -75,13 +76,9 @@ class Database implements Backend
      */
     public function setSetting($key, $value)
     {
-        $lookup = [
-            'id' => $key
-        ];
-
-        DB::table(self::SETTINGS_TABLE_NAME)->updateOrInsert($lookup, [
-            'value' => $value
-        ]);
+        $this->updateOrInsertRecordWithTimestamps(
+            self::SETTINGS_TABLE_NAME, ['id' => $key], ['value' => $value]
+        );
     }
 
     /**
@@ -114,14 +111,16 @@ class Database implements Backend
      */
     public function setPreference($key, $value, $userId)
     {
-        $lookup = [
-            'key'     => $key,
-            'user_id' => $userId
-        ];
-
-        DB::table(self::PREFERENCES_TABLE_NAME)->updateOrInsert($lookup, [
-            'value' => $value
-        ]);
+        $this->updateOrInsertRecordWithTimestamps(
+            self::PREFERENCES_TABLE_NAME,
+            [
+                'key'     => $key,
+                'user_id' => $userId
+            ],
+            [
+                'value' => $value
+            ]
+        );
     }
 
     /**
@@ -166,5 +165,19 @@ class Database implements Backend
                 $this->removePreference($key, $userId);
             }
         });
+    }
+
+    protected function updateOrInsertRecordWithTimestamps($tableName, $lookup, $values)
+    {
+        $now = Carbon::now();
+        $values = array_merge($values, ['updated_at' => $now]);
+
+        $table = DB::table($tableName);
+
+        if (! $table->where($lookup)->exists()) {
+            $table->insert(array_merge($lookup, $values, ['created_at' => $now]));
+        } else {
+            $table->take(1)->update($values);
+        }
     }
 }
