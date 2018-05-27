@@ -11,7 +11,7 @@
 
 namespace Konekt\Gears\Backend\Drivers;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Konekt\Gears\Contracts\Backend;
