@@ -132,7 +132,7 @@ class Node
      */
     public function findItemByKey(string $key)
     {
-        return $this->items->first(function(BaseItem $item, $index) use ($key) {
+        return $this->items->first(function (BaseItem $item, $index) use ($key) {
             return $item->getKey() == $key;
         });
     }

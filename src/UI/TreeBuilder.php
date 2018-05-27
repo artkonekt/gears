@@ -44,10 +44,10 @@ class TreeBuilder
     ) {
         $this->tree = new Tree();
 
-        $this->settingRepository = $settingRepository;
+        $this->settingRepository    = $settingRepository;
         $this->preferenceRepository = $preferenceRepository;
-        $this->settingsRegistry = $settingsRegistry;
-        $this->preferencesRegistry = $preferencesRegistry;
+        $this->settingsRegistry     = $settingsRegistry;
+        $this->preferencesRegistry  = $preferencesRegistry;
     }
 
     public function getTree(): Tree

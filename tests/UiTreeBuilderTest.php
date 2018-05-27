@@ -104,10 +104,10 @@ class UiTreeBuilderTest extends TestCase
     {
         parent::setUp();
 
-        $this->backend = new Database();
-        $this->settingsRegistry    = new SettingsRegistry();
-        $this->settingRepository   = new SettingRepository($this->backend, $this->settingsRegistry);
-        $this->preferencesRegistry = new PreferencesRegistry();
+        $this->backend              = new Database();
+        $this->settingsRegistry     = new SettingsRegistry();
+        $this->settingRepository    = new SettingRepository($this->backend, $this->settingsRegistry);
+        $this->preferencesRegistry  = new PreferencesRegistry();
         $this->preferenceRepository = new PreferenceRepository($this->backend, $this->preferencesRegistry);
 
         $this->builder = new TreeBuilder(
