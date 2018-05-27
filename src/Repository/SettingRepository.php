@@ -29,6 +29,11 @@ class SettingRepository
         $this->registry = $registry;
     }
 
+    public function getRegistry(): SettingsRegistry
+    {
+        return $this->registry;
+    }
+
     /**
      * Returns the value of a setting
      *

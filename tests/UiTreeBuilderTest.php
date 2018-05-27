@@ -110,11 +110,6 @@ class UiTreeBuilderTest extends TestCase
         $this->preferencesRegistry  = new PreferencesRegistry();
         $this->preferenceRepository = new PreferenceRepository($this->backend, $this->preferencesRegistry);
 
-        $this->builder = new TreeBuilder(
-            $this->settingsRegistry,
-            $this->settingRepository,
-            $this->preferencesRegistry,
-            $this->preferenceRepository
-        );
+        $this->builder = new TreeBuilder($this->settingRepository, $this->preferenceRepository);
     }
 }

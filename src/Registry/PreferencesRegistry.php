@@ -42,11 +42,11 @@ class PreferencesRegistry extends BaseRegistry
      */
     public function addByKey(string $key): Preference
     {
-        $setting = new SimplePreference($key);
+        $preference = new SimplePreference($key);
 
-        $this->add($setting);
+        $this->add($preference);
 
-        return $setting;
+        return $preference;
     }
 
     public function remove(Preference $setting)

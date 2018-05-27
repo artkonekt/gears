@@ -37,17 +37,15 @@ class TreeBuilder
     protected $preferencesRegistry;
 
     public function __construct(
-        SettingsRegistry $settingsRegistry,
         SettingRepository $settingRepository,
-        PreferencesRegistry $preferencesRegistry,
         PreferenceRepository $preferenceRepository
     ) {
         $this->tree = new Tree();
 
         $this->settingRepository    = $settingRepository;
         $this->preferenceRepository = $preferenceRepository;
-        $this->settingsRegistry     = $settingsRegistry;
-        $this->preferencesRegistry  = $preferencesRegistry;
+        $this->settingsRegistry     = $settingRepository->getRegistry();
+        $this->preferencesRegistry  = $preferenceRepository->getRegistry();
     }
 
     public function getTree(): Tree

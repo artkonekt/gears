@@ -31,6 +31,11 @@ class PreferenceRepository
         $this->registry = $registry;
     }
 
+    public function getRegistry(): PreferencesRegistry
+    {
+        return $this->registry;
+    }
+
     /**
      * Returns the value of a preference
      *
