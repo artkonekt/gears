@@ -169,7 +169,7 @@ class Database implements Backend
 
     protected function updateOrInsertRecordWithTimestamps($tableName, $lookup, $values)
     {
-        $now = Carbon::now();
+        $now    = Carbon::now();
         $values = array_merge($values, ['updated_at' => $now]);
 
         $table = DB::table($tableName);
