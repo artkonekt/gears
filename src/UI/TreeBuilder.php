@@ -78,9 +78,9 @@ class TreeBuilder
     /**
      * @return static
      */
-    public function addSettingItem(string $nodeId, $widget, $settingKey)
+    public function addSettingItem(string $parentNodeId, $widget, $settingKey)
     {
-        $node = $this->tree->findNode($nodeId, true);
+        $node = $this->tree->findNode($parentNodeId, true);
         if ($node && $setting = $this->findSettingByKey($settingKey)) {
             $node->createSettingItem($widget, $setting['object'], $setting['value']);
         }
