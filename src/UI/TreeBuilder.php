@@ -36,9 +36,13 @@ class TreeBuilder
     /** @var PreferencesRegistry */
     protected $preferencesRegistry;
 
+    /** @var bool */
+    protected $lazyLoad;
+
     public function __construct(
         SettingRepository $settingRepository,
-        PreferenceRepository $preferenceRepository
+        PreferenceRepository $preferenceRepository,
+        bool $lazyLoad = true
     ) {
         $this->tree = new Tree();
 
@@ -46,10 +50,14 @@ class TreeBuilder
         $this->preferenceRepository = $preferenceRepository;
         $this->settingsRegistry     = $settingRepository->getRegistry();
         $this->preferencesRegistry  = $preferenceRepository->getRegistry();
+        $this->lazyLoad             = $lazyLoad;
     }
 
     public function getTree(): Tree
     {
+        if ($this->lazyLoad) {
+            $this->loadSettingValues();
+        }
         return $this->tree;
     }
 
@@ -88,6 +96,22 @@ class TreeBuilder
         return $this;
     }
 
+    private function loadSettingValues()
+    {
+        if (!$this->settings) {
+            $this->settings = $this->settingRepository->all();
+        }
+
+        foreach ($this->tree->nodes() as $node) {
+            /** @var Node $node */
+            foreach ($node->items() as $item) {
+                /** @var SettingItem $item */
+                $setting = $item->getSetting();
+                $item->setValue($this->settings[$setting->key()] ?? $setting->default());
+            }
+        }
+    }
+
     /**
      * @param string $key
      *
@@ -95,7 +119,7 @@ class TreeBuilder
      */
     private function findSettingByKey(string $key)
     {
-        if (!$this->settings) {
+        if (!$this->settings && !$this->lazyLoad) {
             $this->settings = $this->settingRepository->all();
         }
 

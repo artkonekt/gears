@@ -57,6 +57,15 @@ abstract class BaseItem
     }
 
     /**
+     * Set the value of the setting or preference for the UI
+     * NOTE: This DOES NOT SAVE the value in the DB!
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    /**
      * Returns the id of the item (gets generated from the key)
      *
      * @return string
