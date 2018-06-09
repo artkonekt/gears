@@ -267,4 +267,53 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
         $this->assertNotContains($prefItem1, $node->items());
         $this->assertContains($pretItem2, $node->items());
     }
+
+    /**
+     * @test
+     */
+    public function nodes_can_be_sorted()
+    {
+        $root = new Node('root');
+
+        $nodeA = $root->createChild('A');
+        $nodeB = $root->createChild('B');
+        $nodeC = $root->createChild('C');
+
+        $this->assertEquals(['A', 'B', 'C'], array_keys($root->children()));
+
+        $nodeA->order = 150;
+        $nodeB->order = 100;
+        $nodeC->order = 50;
+
+        $this->assertEquals(['C', 'B', 'A'], array_keys($root->children()));
+    }
+
+    /**
+     * @test
+     */
+    public function items_can_be_sorted()
+    {
+        $node = new Node('humanism');
+
+        $america = $node->createSettingItem('text', new SimpleSetting('miss_america'));
+        $bikini = new PreferenceItem('checkbox', new SimplePreference('has_bikini'));
+        $node->addItem($bikini);
+
+        $this->assertEquals(
+            ['miss_america', 'has_bikini'],
+            collect($node->items())->map(function($item) {
+                return $item->getKey();
+            })->all()
+        );
+
+        $bikini->order = 1;
+        $america->order = 2;
+
+        $this->assertEquals(
+            ['has_bikini', 'miss_america'],
+            collect($node->items())->map(function($item) {
+                return $item->getKey();
+            })->all()
+        );
+    }
 }

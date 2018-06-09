@@ -17,6 +17,8 @@ use Konekt\Gears\Contracts\Setting;
 
 class Node
 {
+    use Sortable;
+
     /** @var string */
     private $id;
 
@@ -81,9 +83,13 @@ class Node
         }
     }
 
-    public function createChild(string $id, string $label = null)
+    public function createChild(string $id, string $label = null, int $order = null)
     {
         $child = new static($id, $label);
+
+        if (null !== $order) {
+            $child->order = $order;
+        }
 
         $this->addChild($child);
 
@@ -117,7 +123,7 @@ class Node
 
     public function children(): array
     {
-        return $this->children->all();
+        return $this->children->sortBy('order')->all();
     }
 
     public function addItem(BaseItem $item)
@@ -137,18 +143,26 @@ class Node
         });
     }
 
-    public function createSettingItem($widget, Setting $setting, $value = null): SettingItem
+    public function createSettingItem($widget, Setting $setting, $value = null, int $order = null): SettingItem
     {
         $item = new SettingItem($widget, $setting, $value);
+
+        if (null !== $order) {
+            $item->order = $order;
+        }
 
         $this->items->push($item);
 
         return $item;
     }
 
-    public function createPreferenceItem($widget, Preference $preference, $value = null): PreferenceItem
+    public function createPreferenceItem($widget, Preference $preference, $value = null, int $order = null): PreferenceItem
     {
         $item = new PreferenceItem($widget, $preference, $value);
+
+        if (null !== $order) {
+            $item->order = $order;
+        }
 
         $this->items->push($item);
 
@@ -164,6 +178,6 @@ class Node
 
     public function items(): array
     {
-        return $this->items->all();
+        return $this->items->sortBy('order')->values()->all();
     }
 }

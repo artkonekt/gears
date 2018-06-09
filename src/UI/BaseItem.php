@@ -16,6 +16,8 @@ use Konekt\Gears\Enums\CogType;
 
 abstract class BaseItem
 {
+    use Sortable;
+    
     /** @var Widget */
     private $widget;
 

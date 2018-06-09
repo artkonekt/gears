@@ -92,4 +92,25 @@ class UITreeTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($tree->findNode('top3.child1', false));
         $this->assertEquals('top3.child1', $tree->findNode('top3.child1', true)->id());
     }
+
+    /**
+     * @test
+     */
+    public function root_nodes_can_be_sorted()
+    {
+        $tree = new Tree();
+
+        $tree->createNode('Toyota');
+        $tree->createNode('Nissan');
+        $tree->createNode('Kia');
+
+        $this->assertEquals(['Toyota', 'Nissan', 'Kia'], array_keys($tree->nodes()));
+
+        $tree->findNode('Toyota')->order = 101;
+        $tree->findNode('Kia')->order = 100;
+        $tree->findNode('Nissan')->order = 99;
+
+
+        $this->assertEquals(['Nissan', 'Kia', 'Toyota'], array_keys($tree->nodes()));
+    }
 }

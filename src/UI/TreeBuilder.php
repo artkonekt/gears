@@ -69,9 +69,9 @@ class TreeBuilder
     /**
      * @return static
      */
-    public function addRootNode(string $id, string $label = null)
+    public function addRootNode(string $id, string $label = null, int $order = null)
     {
-        $this->tree->createNode($id, $label);
+        $this->tree->createNode($id, $label, $order);
 
         return $this;
     }
@@ -79,10 +79,10 @@ class TreeBuilder
     /**
      * @return static
      */
-    public function addChildNode(string $parentNodeId, $id, $label = null)
+    public function addChildNode(string $parentNodeId, $id, $label = null, int $order = null)
     {
         if ($parentNode = $this->tree->findNode($parentNodeId, true)) {
-            $parentNode->createChild($id, $label);
+            $parentNode->createChild($id, $label, $order);
         }
 
         return $this;
@@ -91,11 +91,11 @@ class TreeBuilder
     /**
      * @return static
      */
-    public function addSettingItem(string $parentNodeId, $widget, $settingKey)
+    public function addSettingItem(string $parentNodeId, $widget, $settingKey, int $order = null)
     {
         $node = $this->tree->findNode($parentNodeId, true);
         if ($node && $setting = $this->findSettingByKey($settingKey)) {
-            $node->createSettingItem($widget, $setting['object'], $setting['value']);
+            $node->createSettingItem($widget, $setting['object'], $setting['value'], $order);
         }
 
         return $this;
@@ -104,11 +104,11 @@ class TreeBuilder
     /**
      * @return static
      */
-    public function addPreferenceItem(string $parentNodeId, $widget, $preferenceKey)
+    public function addPreferenceItem(string $parentNodeId, $widget, $preferenceKey, int $order = null)
     {
         $node = $this->tree->findNode($parentNodeId, true);
         if ($node && $preference = $this->findPreferenceByKey($preferenceKey)) {
-            $node->createPreferenceItem($widget, $preference['object'], $preference['value']);
+            $node->createPreferenceItem($widget, $preference['object'], $preference['value'], $order);
         }
 
         return $this;

@@ -325,6 +325,48 @@ class UiTreeBuilderTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function order_of_nodes_can_be_specified()
+    {
+        $this->builder->addRootNode('abc', 'Abc Label', 20);
+        $this->builder->addRootNode('def', 'Def Label', 10);
+        $this->builder->addRootNode('ghi', 'Abc Label', 15);
+
+        $this->builder->addChildNode('abc', 'AAA', null, 2);
+        $this->builder->addChildNode('abc', 'BBB', null, 1);
+
+        $tree = $this->builder->getTree();
+
+        $this->assertEquals(['def', 'ghi', 'abc'], array_keys($tree->nodes()));
+        $this->assertEquals(['BBB', 'AAA'], array_keys($tree->findNode('abc')->children()));
+    }
+
+    /**
+     * @test
+     */
+    public function order_of_items_can_be_specified()
+    {
+        $this->settingsRegistry->addByKey('habits');
+        $this->settingsRegistry->addByKey('art');
+        $this->settingsRegistry->addByKey('economy');
+
+        $this->builder->addRootNode('culture');
+        $this->builder->addSettingItem('culture', 'text', 'art', 20);
+        $this->builder->addSettingItem('culture', 'text', 'economy', 200);
+        $this->builder->addSettingItem('culture', 'text', 'habits', 2);
+
+        $tree = $this->builder->getTree();
+
+        $this->assertEquals(
+            ['habits', 'art', 'economy'],
+            collect($tree->findNode('culture')->items())->map(function($item) {
+                return $item->getKey();
+            })->all()
+        );
+    }
+
+    /**
      * @inheritDoc
      */
     public function setUp()

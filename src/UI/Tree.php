@@ -26,9 +26,14 @@ class Tree
         $this->nodes->put($node->id(), $node);
     }
 
-    public function createNode(string $id, string $label = null): Node
+    public function createNode(string $id, string $label = null, int $order = null): Node
     {
         $node = new Node($id, $label);
+
+        if (null !== $order) {
+            $node->order = $order;
+        }
+
         $this->addNode($node);
 
         return $node;
@@ -49,7 +54,7 @@ class Tree
 
     public function nodes(): array
     {
-        return $this->nodes->all();
+        return $this->nodes->sortBy('order')->all();
     }
 
     private function findByIdAmongChildren(string $id, array $children, $recursive)
