@@ -133,7 +133,7 @@ class PreferenceRepository
     protected function getUserId($user)
     {
         if (is_null($user)) {
-            return Auth::user()->id;
+            return Auth::user() ? Auth::user()->id : null;
         } elseif (is_object($user)) {
             return $user->id;
         }

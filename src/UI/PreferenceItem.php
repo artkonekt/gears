@@ -12,12 +12,14 @@
 namespace Konekt\Gears\UI;
 
 use Konekt\Gears\Contracts\Preference;
+use Konekt\Gears\Enums\CogType;
 
 class PreferenceItem extends BaseItem
 {
     public function __construct($widget, Preference $setting, $value = null)
     {
         parent::__construct($widget, $setting, $value);
+        $this->type = CogType::PREFERENCE();
     }
 
     public function getPreference(): Preference

@@ -12,6 +12,7 @@
 namespace Konekt\Gears\UI;
 
 use Konekt\Gears\Contracts\Cog;
+use Konekt\Gears\Enums\CogType;
 
 abstract class BaseItem
 {
@@ -23,6 +24,9 @@ abstract class BaseItem
 
     /** @var mixed */
     private $value;
+
+    /** @var CogType */
+    protected $type;
 
     /**
      * Item constructor.
@@ -87,6 +91,21 @@ abstract class BaseItem
     public function getKey()
     {
         return $this->cog->key();
+    }
+
+    /**
+     * Returns the default value of the setting or preference
+     *
+     * @return mixed
+     */
+    public function getDefaultValue()
+    {
+        return $this->cog->default();
+    }
+
+    public function getType(): CogType
+    {
+        return $this->type;
     }
 
     protected function getCog(): Cog

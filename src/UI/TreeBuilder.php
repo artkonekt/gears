@@ -11,6 +11,7 @@
 
 namespace Konekt\Gears\UI;
 
+use Konekt\Gears\Enums\CogType;
 use Konekt\Gears\Registry\PreferencesRegistry;
 use Konekt\Gears\Registry\SettingsRegistry;
 use Konekt\Gears\Repository\PreferenceRepository;
@@ -29,6 +30,9 @@ class TreeBuilder
 
     /** @var array|null */
     protected $settings;
+
+    /** @var array|null */
+    protected $preferences;
 
     /** @var SettingsRegistry */
     protected $settingsRegistry;
@@ -56,8 +60,9 @@ class TreeBuilder
     public function getTree(): Tree
     {
         if ($this->lazyLoad) {
-            $this->loadSettingValues();
+            $this->loadValues();
         }
+
         return $this->tree;
     }
 
@@ -96,19 +101,31 @@ class TreeBuilder
         return $this;
     }
 
-    private function loadSettingValues()
+    /**
+     * @return static
+     */
+    public function addPreferenceItem(string $parentNodeId, $widget, $preferenceKey)
+    {
+        $node = $this->tree->findNode($parentNodeId, true);
+        if ($node && $preference = $this->findPreferenceByKey($preferenceKey)) {
+            $node->createPreferenceItem($widget, $preference['object'], $preference['value']);
+        }
+
+        return $this;
+    }
+
+    protected function loadValues()
     {
         if (!$this->settings) {
             $this->settings = $this->settingRepository->all();
         }
 
+        if (!$this->preferences) {
+            $this->preferences = $this->preferenceRepository->all();
+        }
+
         foreach ($this->tree->nodes() as $node) {
-            /** @var Node $node */
-            foreach ($node->items() as $item) {
-                /** @var SettingItem $item */
-                $setting = $item->getSetting();
-                $item->setValue($this->settings[$setting->key()] ?? $setting->default());
-            }
+            $this->loadItemValues($node);
         }
     }
 
@@ -117,7 +134,7 @@ class TreeBuilder
      *
      * @return array|null
      */
-    private function findSettingByKey(string $key)
+    protected function findSettingByKey(string $key)
     {
         if (!$this->settings && !$this->lazyLoad) {
             $this->settings = $this->settingRepository->all();
@@ -128,6 +145,50 @@ class TreeBuilder
                 'object' => $setting,
                 'value'  => $this->settings[$key] ?? $setting->default()
             ];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return array|null
+     */
+    protected function findPreferenceByKey(string $key)
+    {
+        if (!$this->preferences && !$this->lazyLoad) {
+            $this->preferences = $this->preferenceRepository->all();
+        }
+
+        if ($preference = $this->preferencesRegistry->get($key)) {
+            return [
+                'object' => $preference,
+                'value'  => $this->preferences[$key] ?? $preference->default()
+            ];
+        }
+
+        return null;
+    }
+
+    private function loadItemValues(Node $node, $recursive = true)
+    {
+        /** @var BaseItem $item */
+        foreach ($node->items() as $item) {
+            switch ($item->getType()->value()) {
+                case CogType::SETTING:
+                    $item->setValue($this->settings[$item->getKey()] ?? $item->getDefaultValue());
+                    break;
+                case CogType::PREFERENCE:
+                    $item->setValue($this->preferences[$item->getKey()] ?? $item->getDefaultValue());
+                    break;
+            }
+        }
+
+        if ($recursive) {
+            foreach ($node->children() as $child) {
+                $this->loadItemValues($child);
+            }
         }
     }
 }
