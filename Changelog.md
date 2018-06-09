@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0
+
+### 1.0.0-rc.1
+##### 2018-06-09
+
+- UI Tree Builder lazy loads settings/prefs
+- Order of UI nodes and items can be set
+
 ## 0.9
 
 ### 0.9.2
