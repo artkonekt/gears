@@ -296,22 +296,22 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
         $node = new Node('humanism');
 
         $america = $node->createSettingItem('text', new SimpleSetting('miss_america'));
-        $bikini = new PreferenceItem('checkbox', new SimplePreference('has_bikini'));
+        $bikini  = new PreferenceItem('checkbox', new SimplePreference('has_bikini'));
         $node->addItem($bikini);
 
         $this->assertEquals(
             ['miss_america', 'has_bikini'],
-            collect($node->items())->map(function($item) {
+            collect($node->items())->map(function ($item) {
                 return $item->getKey();
             })->all()
         );
 
-        $bikini->order = 1;
+        $bikini->order  = 1;
         $america->order = 2;
 
         $this->assertEquals(
             ['has_bikini', 'miss_america'],
-            collect($node->items())->map(function($item) {
+            collect($node->items())->map(function ($item) {
                 return $item->getKey();
             })->all()
         );

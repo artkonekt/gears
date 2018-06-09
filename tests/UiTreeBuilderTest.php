@@ -360,7 +360,7 @@ class UiTreeBuilderTest extends TestCase
 
         $this->assertEquals(
             ['habits', 'art', 'economy'],
-            collect($tree->findNode('culture')->items())->map(function($item) {
+            collect($tree->findNode('culture')->items())->map(function ($item) {
                 return $item->getKey();
             })->all()
         );
