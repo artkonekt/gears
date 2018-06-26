@@ -14,6 +14,7 @@ namespace Konekt\Gears\Tests;
 use Konekt\Gears\Contracts\Setting;
 use Konekt\Gears\Defaults\SimpleSetting;
 use Konekt\Gears\Registry\SettingsRegistry;
+use Konekt\Gears\Tests\Examples\CustomSetting;
 
 class SettingsRegistryTest extends \PHPUnit\Framework\TestCase
 {
@@ -102,6 +103,23 @@ class SettingsRegistryTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(Setting::class, $returnedSetting);
         $this->assertEquals('storkower', $returnedSetting->key());
+    }
+
+    /**
+     * @test
+     */
+    public function custom_setting_class_can_be_registered()
+    {
+        $customSetting = new CustomSetting();
+        $this->registry->add($customSetting);
+
+        $returnedSetting = $this->registry->get('custom.setting');
+
+        $this->assertInstanceOf(Setting::class, $returnedSetting);
+        $this->assertInstanceOf(CustomSetting::class, $returnedSetting);
+        $this->assertEquals('Default', $returnedSetting->default());
+        $this->assertEquals('custom.setting', $returnedSetting->key());
+
     }
 
     protected function setUp()

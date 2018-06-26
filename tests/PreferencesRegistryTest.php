@@ -14,6 +14,7 @@ namespace Konekt\Gears\Tests;
 use Konekt\Gears\Contracts\Preference;
 use Konekt\Gears\Defaults\SimplePreference;
 use Konekt\Gears\Registry\PreferencesRegistry;
+use Konekt\Gears\Tests\Examples\CustomPreference;
 
 class PreferencesRegistryTest extends \PHPUnit\Framework\TestCase
 {
@@ -102,6 +103,23 @@ class PreferencesRegistryTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(Preference::class, $returnedPreference);
         $this->assertEquals('landsberger', $returnedPreference->key());
+    }
+
+    /**
+     * @test
+     */
+    public function custom_setting_class_can_be_registered()
+    {
+        $customPreference = new CustomPreference();
+        $this->registry->add($customPreference);
+
+        $returnedPreference = $this->registry->get('custom.preference');
+
+        $this->assertInstanceOf(Preference::class, $returnedPreference);
+        $this->assertInstanceOf(CustomPreference::class, $returnedPreference);
+        $this->assertEquals('Default', $returnedPreference->default());
+        $this->assertEquals('custom.preference', $returnedPreference->key());
+
     }
 
     protected function setUp()
