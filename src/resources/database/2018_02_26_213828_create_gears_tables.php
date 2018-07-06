@@ -9,7 +9,7 @@ class CreateGearsTables extends Migration
     public function up()
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->string('id', 512);
+            $table->string('id', 255)->charset('latin1');
             $table->text('value')->nullable();
             $table->timestamps();
 
@@ -18,7 +18,7 @@ class CreateGearsTables extends Migration
 
         Schema::create('preferences', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('key', 512);
+            $table->string('key', 255)->charset('latin1');
             $table->integer('user_id')->unsigned();
             $table->text('value')->nullable();
             $table->timestamps();
