@@ -119,7 +119,6 @@ class SettingsRegistryTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(CustomSetting::class, $returnedSetting);
         $this->assertEquals('Default', $returnedSetting->default());
         $this->assertEquals('custom.setting', $returnedSetting->key());
-
     }
 
     protected function setUp()

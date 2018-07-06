@@ -119,7 +119,6 @@ class PreferencesRegistryTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(CustomPreference::class, $returnedPreference);
         $this->assertEquals('Default', $returnedPreference->default());
         $this->assertEquals('custom.preference', $returnedPreference->key());
-
     }
 
     protected function setUp()
