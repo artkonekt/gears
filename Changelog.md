@@ -2,6 +2,12 @@
 
 ## 1.0
 
+### 1.0.0-rc.2
+##### 2018-07-06
+
+- MySQL<5.7 and MariaDB compatibility fix (key length issues)
+- Documentation updates
+
 ### 1.0.0-rc.1
 ##### 2018-06-09
 
