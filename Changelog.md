@@ -2,6 +2,14 @@
 
 ## 1.0
 
+### 1.0.0
+
+##### 2018-08-11
+
+- Same as RC2
+- UI Documentation has been added
+- README has been simplified
+
 ### 1.0.0-rc.2
 ##### 2018-07-06
 
