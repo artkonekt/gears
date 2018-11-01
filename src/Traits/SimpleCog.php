@@ -49,6 +49,10 @@ trait SimpleCog
      */
     public function options()
     {
+        if (is_callable($this->options)) {
+            return call_user_func($this->options);
+        }
+
         return $this->options;
     }
 }
