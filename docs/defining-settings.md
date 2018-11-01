@@ -38,6 +38,12 @@ $settingsRegistry = app('gears.settings_registry');
 
 // Default theme is dark, available options are dark and light
 $settingsRegistry->add(new SimpleSetting('theme', 'dark', ['dark', 'light']));
+
+// You can also pass a callback as the options parameter
+$settingsRegistry->add(new SimpleSetting('default.european.country', null, function() {
+    // Some lengthy operation what you want to defer:
+    return Country::where('continent', 'Europe')->get()->pluck('name', 'id');
+}));
 ```
 
 ## Custom Setting Classes

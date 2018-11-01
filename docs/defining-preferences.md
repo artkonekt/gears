@@ -17,6 +17,12 @@ $prefsRegistry->add(new SimplePreference('language', 'en'));
 
 // Defining a default (yellow) and 3 available options:
 $prefsRegistry->add(new SimplePreference('color_scheme', 'yellow', ['green', 'red', 'yellow']));
+
+// Define the option as callback:
+$prefsRegistry->add(new SimplePreference('language', 'en', function() {
+    // Some lengthy operation what you want to defer:
+    return Language::all()->pluck('name', 'id');    
+}));
 ```
 
 ## Custom Preference Classes
