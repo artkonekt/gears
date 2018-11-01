@@ -27,7 +27,7 @@ class OptionsTest extends TestCase
     /** @test */
     public function passing_a_callback_as_options_in_the_simple_setting_constructor_returns_the_result_of_the_callback_when_calling_options_method()
     {
-        $setting = new SimpleSetting('mine', null, function() {
+        $setting = new SimpleSetting('mine', null, function () {
             return ['7', '8', '9'];
         });
 
@@ -45,7 +45,7 @@ class OptionsTest extends TestCase
     /** @test */
     public function passing_a_callback_as_options_in_the_simple_preference_constructor_returns_the_result_of_the_callback_when_calling_options_method()
     {
-        $preference = new SimplePreference('users.bestof', null, function() {
+        $preference = new SimplePreference('users.bestof', null, function () {
             return ['x', 'y', 'z'];
         });
 
