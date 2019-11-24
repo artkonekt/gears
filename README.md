@@ -14,14 +14,26 @@ This Laravel package allows you to manage and save/retrieve settings and prefere
 
 Settings and preferences are being managed separately. Values (by default) are being saved to the
 database (`settings` and `preferences` tables) and are cached with the
-[configured cache](https://laravel.com/docs/5.6/cache) for your application.
+[configured cache](https://laravel.com/docs/5.8/cache) for your application.
 
 The backend for storing the settings can be completely replaced, so it is possible to store them in
 anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
 
+## Laravel Compatibility
+
+| Laravel | Gears     |
+|:--------|:----------|
+| 5.4     | 0.9 - 1.1 |
+| 5.5     | 0.9 - 1.2 |
+| 5.6     | 0.9 - 1.2 |
+| 5.7     | 1.1 - 1.2 |
+| 5.8     | 1.2+      |
+| 6.x     | 1.2+      |
+
+
 ## Installation
 
-> Minimum requirements are PHP 7.0 and Laravel 5.4
+> Minimum requirements (as of v1.2) are PHP 7.1 and Laravel 5.5
 
 Install with composer:
 

@@ -24,6 +24,17 @@ database (`settings` and `preferences` tables) and are cached with the
 The backend for storing the settings can be completely replaced, so it is possible to store them in
 anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
 
+## Compatibility
+
+| Laravel | Gears     |
+|:--------|:----------|
+| 5.4     | 0.9 - 1.1 |
+| 5.5     | 0.9 - 1.2 |
+| 5.6     | 0.9 - 1.2 |
+| 5.7     | 1.1 - 1.2 |
+| 5.8     | 1.2+      |
+| 6.x     | 1.2+      |
+
 ---
 
 **Next**: [Installation &raquo;](installation.md)
