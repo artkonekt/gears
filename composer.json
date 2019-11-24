@@ -14,15 +14,15 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
-        "illuminate/database": "~5.4",
-        "illuminate/support": "~5.4",
+        "php": "^7.1.3",
+        "illuminate/database": "~5.5",
+        "illuminate/support": "~5.5",
         "konekt/enum": "~2.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "6.2 - 7.3",
-        "orchestra/testbench": "^3.4.2",
-        "illuminate/events": "~5.4"
+        "phpunit/phpunit": "6.2 - 7.5",
+        "orchestra/testbench": "~3.5",
+        "illuminate/events": "~5.5"
     },
     "autoload": {
         "psr-4": { "Konekt\\Gears\\": "src/" },
