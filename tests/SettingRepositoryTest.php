@@ -207,7 +207,7 @@ class SettingRepositoryTest extends TestCase
         $this->assertNull($this->repo->get('toes'));
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

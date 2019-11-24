@@ -266,7 +266,7 @@ class DatabaseBackendTest extends TestCase
         $this->assertEquals('twist', $this->backend->getPreference('dance', $vincent));
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

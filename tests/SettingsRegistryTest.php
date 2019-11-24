@@ -121,7 +121,7 @@ class SettingsRegistryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('custom.setting', $returnedSetting->key());
     }
 
-    protected function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

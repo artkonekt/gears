@@ -121,7 +121,7 @@ class PreferencesRegistryTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('custom.preference', $returnedPreference->key());
     }
 
-    protected function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

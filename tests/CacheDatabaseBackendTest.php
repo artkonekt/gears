@@ -378,7 +378,7 @@ class CacheDatabaseBackendTest extends TestCase
         $this->assertEquals('silver', $this->db->allPreferences($schumacher)['mclaren']);
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
