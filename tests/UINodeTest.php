@@ -223,7 +223,11 @@ class UINodeTest extends \PHPUnit\Framework\TestCase
         $node->addItem($item2);
 
         $this->assertCount(2, $node->items());
-        $this->assertInternalType('array', $node->items());
+        if (method_exists($this, 'assertIsArray')) {
+            $this->assertIsArray($node->items());
+        } else {
+            $this->assertInternalType('array', $node->items());
+        }
     }
 
     /**

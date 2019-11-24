@@ -23,7 +23,11 @@ class WidgetTest extends \PHPUnit\Framework\TestCase
         $widget = new Widget('text');
 
         $this->assertEquals('text', $widget->component());
-        $this->assertInternalType('array', $widget->attributes());
+        if (method_exists($this, 'assertIsArray')) {
+            $this->assertIsArray($widget->attributes());
+        } else {
+            $this->assertInternalType('array', $widget->attributes());
+        }
     }
 
     /**

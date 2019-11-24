@@ -11,6 +11,7 @@
 
 namespace Konekt\Gears\Backend;
 
+use Illuminate\Support\Str;
 use Konekt\Gears\Contracts\Backend;
 
 class BackendFactory
@@ -25,7 +26,7 @@ class BackendFactory
     public static function create(string $driver) : Backend
     {
         if (strpos($driver, '\\') === false) {
-            $class = __NAMESPACE__ . '\\Drivers\\' . studly_case($driver);
+            $class = __NAMESPACE__ . '\\Drivers\\' . Str::studly($driver);
         } else {
             $class = $driver;
         }
