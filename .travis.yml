@@ -18,10 +18,10 @@ env:
 
 matrix:
   exclude:
-  - php: 7.1
-    env: LARAVEL=6.0
-  - php: 7.1
-    env: LARAVEL=6.5
+  - php: '7.1'
+    env: 'LARAVEL=6.0'
+  - php: '7.1'
+    env: 'LARAVEL=6.5'
 
 script:
 - vendor/bin/phpunit -c phpunit.xml
