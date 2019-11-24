@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+##### 2019-11-24
+
+- Added Laravel 6.x and 5.8 Support
+- Dropped Laravel 5.4 and PHP 7.0 support
+
 ## 1.1.0
 ##### 2018-11-01
 
