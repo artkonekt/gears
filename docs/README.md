@@ -19,10 +19,10 @@ This Laravel package allows you to manage settings and preferences in your Larav
 
 Settings and preferences are being managed separately. Values (by default) are being saved to the
 database (`settings` and `preferences` tables) and are cached with the
-[configured cache](https://laravel.com/docs/5.6/cache) for your application.
+[configured cache](https://laravel.com/docs/7.x/cache) for your application.
 
-The backend for storing the settings can be completely replaced, so it is possible to store them in
-anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
+The backend for storing the settings [can be replaced](custom-backend.md), so it is
+possible to store them anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
 
 ## Compatibility
 
@@ -34,6 +34,7 @@ anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
 | 5.7     | 1.1 - 1.2 |
 | 5.8     | 1.2+      |
 | 6.x     | 1.2+      |
+| 7.x     | 1.3+      |
 
 ---
 
