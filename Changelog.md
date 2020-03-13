@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+##### 2020-03-XX
+
+- Added Laravel 7 Support
+- Added PHP 7.4 Support
+- Dropped PHP 7.1 Support
+
 ## 1.2.0
 ##### 2019-11-24
 
