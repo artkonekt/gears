@@ -3,7 +3,7 @@
 The package configuration can be published by running:
 
 ```bash
-php artisan vendor:publish --provider="Konekt\Gears\Providers\GearsServiceProvider" --tag="config"
+php artisan vendor:publish --provider='Konekt\\Gears\\Providers\\GearsServiceProvider' --tag="config"
 ```
 
 The following options can be configured:
@@ -14,5 +14,5 @@ The following options can be configured:
 | `migrations` | bool                                   | `true`                                        | If `false`, migrations will not be loaded*               |
 
 > *If migrations are disabled, you can still publish them by invoking:<br> `php artisan
-> vendor:publish --provider="Konekt\Gears\Providers\GearsServiceProvider" --tag="migrations"`
+> vendor:publish --provider='Konekt\\Gears\\Providers\\GearsServiceProvider' --tag="migrations"`
 
