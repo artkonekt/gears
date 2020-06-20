@@ -1,6 +1,7 @@
 - I. Introduction
     - [Overview](README.md)
     - [Installation](installation.md)
+    - [Configuration](configuration.md)
 
 - II. How To Use
     - [Defining Settings](defining-settings.md)

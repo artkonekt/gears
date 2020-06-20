@@ -8,7 +8,9 @@ tables) and caches with your application's [configured cache](https://laravel.co
 To replace the backend the following steps are required:
 
 1. Writing the custom backend class (has to implement the `Backend` interface).
-2. Set the fully qualified classname in the config under the `gears.driver` value.
+2. Set the fully qualified classname in the config* under the `gears.driver` value.
+
+> *See the [Configuration](configuration.md) section for more details.
 
 ## Custom Backend Example
 

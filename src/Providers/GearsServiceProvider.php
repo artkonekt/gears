@@ -24,7 +24,17 @@ class GearsServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->loadMigrationsFrom(dirname(__DIR__) . '/resources/database/');
+        if ($this->config('migrations', true)) {
+            $this->loadMigrationsFrom(dirname(__DIR__) . '/resources/database/');
+        }
+
+        $this->publishes([
+            dirname(__DIR__) . '/resources/config/gears.php' => config_path('gears.php')
+        ], 'config');
+
+        $this->publishes([
+            dirname(__DIR__) . '/resources/database' => database_path('migrations')
+        ], 'migrations');
 
         $this->app->singleton('gears.backend', function () {
             return BackendFactory::create($this->config('driver', self::DEFAULT_BACKEND_DRIVER));
