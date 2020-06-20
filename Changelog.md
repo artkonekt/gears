@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+##### 2020-06-20
+
+- Migrations can be disabled and/or published
+- Configuration can be published
+
 ## 1.3.0
 ##### 2020-03-13
 
