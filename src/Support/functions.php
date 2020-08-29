@@ -7,9 +7,11 @@
  *
  * @return mixed
  */
-function setting(string $key)
-{
-    return \Konekt\Gears\Facades\Settings::get($key);
+if (!function_exists('setting')) {
+    function setting(string $key)
+    {
+        return \Konekt\Gears\Facades\Settings::get($key);
+    }
 }
 
 /**
@@ -22,7 +24,9 @@ function setting(string $key)
  *
  * @return mixed
  */
-function preference(string $key, $user = null)
-{
-    return \Konekt\Gears\Facades\Preferences::get($key, $user);
+if (!function_exists('preference')) {
+    function preference(string $key, $user = null)
+    {
+        return \Konekt\Gears\Facades\Preferences::get($key, $user);
+    }
 }
