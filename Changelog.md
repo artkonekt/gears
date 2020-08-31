@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.1
+##### 2020-08-31
+
+- Fixed possible conflict with `setting` and `preference` helper functions already defined elsewhere
+
 ## 1.4.0
 ##### 2020-06-20
 
