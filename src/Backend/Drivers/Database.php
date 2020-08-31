@@ -77,7 +77,9 @@ class Database implements Backend
     public function setSetting($key, $value)
     {
         $this->updateOrInsertRecordWithTimestamps(
-            self::SETTINGS_TABLE_NAME, ['id' => $key], ['value' => $value]
+            self::SETTINGS_TABLE_NAME,
+            ['id'    => $key],
+            ['value' => $value]
         );
     }
 

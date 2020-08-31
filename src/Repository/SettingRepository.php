@@ -136,7 +136,7 @@ class SettingRepository
                 sprintf(
                     'There\'s no setting registered with key `%s`',
                     $key
-                    )
+                )
             );
         }
 
