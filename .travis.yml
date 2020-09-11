@@ -27,7 +27,7 @@ script:
 - vendor/bin/phpunit -c phpunit.xml
 
 before_install:
-- MINOR=`echo $LARAVEL | sed 's/[5|6|7]\.\([0-9]\+\)/\1/'`
+- MINOR=`echo $LARAVEL | sed 's/[5|6|7|8]\.\([0-9]\+\)/\1/'`
 - '[[ $LARAVEL =~ ^6\.[0-9]+$ ]] && MAJOR=6 || MAJOR=5'
 - '[[ $LARAVEL =~ ^7\.[0-9]+$ ]] && MAJOR=7 || true'
 - '[[ $LARAVEL =~ ^8\.[0-9]+$ ]] && MAJOR=8 || true'
