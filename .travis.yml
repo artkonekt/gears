@@ -31,9 +31,7 @@ before_install:
 - '[[ $LARAVEL =~ ^6\.[0-9]+$ ]] && MAJOR=6 || MAJOR=5'
 - '[[ $LARAVEL =~ ^7\.[0-9]+$ ]] && MAJOR=7 || true'
 - '[[ $LARAVEL =~ ^8\.[0-9]+$ ]] && MAJOR=8 || true'
-- '[ 6 -eq $MAJOR ] && ORCH=4 || ORCH=3'
-- '[ 7 -eq $MAJOR ] && ORCH=5 || true'
-- '[ 8 -eq $MAJOR ] && ORCH=6 || true'
+- echo "Testing against Laravel ${MAJOR}.${MINOR}"
 - composer require "illuminate/support:${MAJOR}.${MINOR}.*" --no-update -v
 - composer require "illuminate/console:${MAJOR}.${MINOR}.*" --no-update -v
 
