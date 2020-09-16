@@ -16,3 +16,4 @@ The following options can be configured:
 > *If migrations are disabled, you can still publish them by invoking:<br> `php artisan
 > vendor:publish --provider='Konekt\\Gears\\Providers\\GearsServiceProvider' --tag="migrations"`
 
+**Next**: [Defining Settings &raquo;](defining-settings.md)

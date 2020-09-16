@@ -1,6 +1,6 @@
 # Installation
 
-> Minimum requirements (as of v1.2) are PHP 7.1 and Laravel 5.5
+> Minimum requirements (as of v1.5) are PHP 7.2 and Laravel 5.5
 
 Install with composer:
 
@@ -8,7 +8,7 @@ Install with composer:
 composer require konekt/gears
 ```
 
-The service provider and the aliases (facades) get registered automatically with Laravel 5.5.
+The service provider and the aliases (facades) get registered automatically with Laravel.
 
 If you want to register the package manually, add the following lines to `config/app.php`:
 
@@ -27,4 +27,4 @@ If you want to register the package manually, add the following lines to `config
 ]
 ```
 
-**Next**: [Defining Settings &raquo;](defining-settings.md)
+**Next**: [Configuration &raquo;](configuration.md)
