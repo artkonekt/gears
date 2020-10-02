@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+##### 2020-XX-YY
+
+- Allow v3.0 enums
+- Dropped Laravel 5 support
+- Dropped PHP 7.2 support
+
 ## 1.5.0
 ##### 2020-09-12
 
