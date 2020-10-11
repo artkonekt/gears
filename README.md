@@ -27,7 +27,7 @@ anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
 | 5.5     | 0.9 - 1.2 |
 | 5.6     | 0.9 - 1.2 |
 | 5.7     | 1.1 - 1.2 |
-| 5.8     | 1.2+      |
+| 5.8     | 1.2 - 1.5 |
 | 6.x     | 1.2+      |
 | 7.x     | 1.3+      |
 | 8.x     | 1.5+      |
@@ -35,7 +35,7 @@ anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
 
 ## Installation
 
-> Minimum requirements (as of v1.5) are PHP 7.2 and Laravel 5.5
+> Minimum requirements (as of v1.6) are PHP 7.3 and Laravel 6
 
 Install with composer:
 
