@@ -1,7 +1,7 @@
 # Changelog
 
-## Unreleased
-##### 2020-XX-YY
+## 1.6.0
+##### 2020-10-11
 
 - Allow v3.0 enums
 - Dropped Laravel 5 support
