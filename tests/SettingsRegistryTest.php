@@ -21,6 +21,13 @@ class SettingsRegistryTest extends \PHPUnit\Framework\TestCase
     /** @var SettingsRegistry */
     private $registry;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->registry = new SettingsRegistry();
+    }
+
     /**
      * @test
      */
@@ -119,12 +126,5 @@ class SettingsRegistryTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(CustomSetting::class, $returnedSetting);
         $this->assertEquals('Default', $returnedSetting->default());
         $this->assertEquals('custom.setting', $returnedSetting->key());
-    }
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->registry = new SettingsRegistry();
     }
 }

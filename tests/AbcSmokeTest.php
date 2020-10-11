@@ -9,7 +9,6 @@
  *
  */
 
-
 namespace Konekt\Gears\Tests;
 
 use PHPUnit\Framework\TestCase;

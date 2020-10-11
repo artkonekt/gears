@@ -32,8 +32,8 @@ trait ConfiguresBackend
      * Returns the cache key for a given setting key.
      *
      * @param $key
-     * @return mixed
      * @throws \ReflectionException
+     * @return mixed
      */
     private function getSettingCacheKey($key)
     {

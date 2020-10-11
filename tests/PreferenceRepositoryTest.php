@@ -25,6 +25,14 @@ class PreferenceRepositoryTest extends TestCase
     /** @var PreferencesRegistry */
     private $registry;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->registry = new PreferencesRegistry();
+        $this->repo     = new PreferenceRepository(new Database(), $this->registry);
+    }
+
     /**
      * @test
      */
@@ -206,13 +214,5 @@ class PreferenceRepositoryTest extends TestCase
 
         $this->assertNull($this->repo->get('knees', $uid));
         $this->assertNull($this->repo->get('toes', $uid));
-    }
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->registry = new PreferencesRegistry();
-        $this->repo     = new PreferenceRepository(new Database(), $this->registry);
     }
 }

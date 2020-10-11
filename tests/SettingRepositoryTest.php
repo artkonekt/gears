@@ -16,7 +16,6 @@ use Konekt\Gears\Defaults\SimpleSetting;
 use Konekt\Gears\Exceptions\UnregisteredSettingException;
 use Konekt\Gears\Registry\SettingsRegistry;
 use Konekt\Gears\Repository\SettingRepository;
-use Konekt\Gears\Tests\Mocks\SettingWithDefault;
 
 class SettingRepositoryTest extends TestCase
 {
@@ -25,6 +24,14 @@ class SettingRepositoryTest extends TestCase
 
     /** @var SettingsRegistry */
     private $registry;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->registry = new SettingsRegistry();
+        $this->repo     = new SettingRepository(new Database(), $this->registry);
+    }
 
     /**
      * @test
@@ -205,13 +212,5 @@ class SettingRepositoryTest extends TestCase
 
         $this->assertNull($this->repo->get('knees'));
         $this->assertNull($this->repo->get('toes'));
-    }
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->registry = new SettingsRegistry();
-        $this->repo     = new SettingRepository(new Database(), $this->registry);
     }
 }

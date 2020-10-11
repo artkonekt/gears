@@ -24,6 +24,17 @@ class CacheDatabaseBackendTest extends TestCase
     /** @var Database */
     private $db;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->db      = new Database();
+        $this->backend = new CachedDatabase(
+            $this->app->make(Repository::class),
+            $this->db
+        );
+    }
+
     /**
      * @test
      */
@@ -376,16 +387,5 @@ class CacheDatabaseBackendTest extends TestCase
         $this->assertNull($this->db->getPreference('benetton', $schumacher));
         $this->assertEquals('silver', $all['mclaren']);
         $this->assertEquals('silver', $this->db->allPreferences($schumacher)['mclaren']);
-    }
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->db      = new Database();
-        $this->backend = new CachedDatabase(
-            $this->app->make(Repository::class),
-            $this->db
-        );
     }
 }

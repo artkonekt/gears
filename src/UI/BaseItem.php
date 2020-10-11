@@ -17,7 +17,10 @@ use Konekt\Gears\Enums\CogType;
 abstract class BaseItem
 {
     use Sortable;
-    
+
+    /** @var CogType */
+    protected $type;
+
     /** @var Widget */
     private $widget;
 
@@ -26,9 +29,6 @@ abstract class BaseItem
 
     /** @var mixed */
     private $value;
-
-    /** @var CogType */
-    protected $type;
 
     /**
      * Item constructor.

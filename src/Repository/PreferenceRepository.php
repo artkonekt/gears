@@ -42,8 +42,8 @@ class PreferenceRepository
      * @param string                   $key
      * @param int|Authenticatable|null $user
      *
-     * @return mixed
      * @throws UnregisteredPreferenceException
+     * @return mixed
      */
     public function get($key, $user = null)
     {
@@ -146,8 +146,8 @@ class PreferenceRepository
      *
      * @param string $key
      *
-     * @return \Konekt\Gears\Contracts\Preference
      * @throws UnregisteredPreferenceException
+     * @return \Konekt\Gears\Contracts\Preference
      */
     protected function getPreferenceOrFail(string $key)
     {

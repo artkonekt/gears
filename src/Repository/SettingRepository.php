@@ -39,8 +39,8 @@ class SettingRepository
      *
      * @param string $key
      *
-     * @return mixed
      * @throws UnregisteredSettingException
+     * @return mixed
      */
     public function get($key)
     {
@@ -126,8 +126,8 @@ class SettingRepository
      *
      * @param string $key
      *
-     * @return \Konekt\Gears\Contracts\Setting
      * @throws UnregisteredSettingException
+     * @return \Konekt\Gears\Contracts\Setting
      */
     protected function getSettingOrFail(string $key)
     {

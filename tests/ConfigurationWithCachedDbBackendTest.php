@@ -40,7 +40,7 @@ class ConfigurationWithCachedDbBackendTest extends TestCase
         /** @var SettingsRegistry $registry */
         $registry = $this->app->make('gears.settings_registry');
         $registry->addByKey('random_key');
-        
+
         Settings::set('random_key', 'Rnd_value');
         $this->assertEquals('Rnd_value', Settings::get('random_key'));
 

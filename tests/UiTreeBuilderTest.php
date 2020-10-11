@@ -46,6 +46,22 @@ class UiTreeBuilderTest extends TestCase
     private $builder;
 
     /**
+     * @inheritDoc
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->backend              = new Database();
+        $this->settingsRegistry     = new SettingsRegistry();
+        $this->settingRepository    = new SettingRepository($this->backend, $this->settingsRegistry);
+        $this->preferencesRegistry  = new PreferencesRegistry();
+        $this->preferenceRepository = new PreferenceRepository($this->backend, $this->preferencesRegistry);
+
+        $this->builder = new TreeBuilder($this->settingRepository, $this->preferenceRepository);
+    }
+
+    /**
      * @test
      */
     public function it_returns_a_tree()
@@ -364,21 +380,5 @@ class UiTreeBuilderTest extends TestCase
                 return $item->getKey();
             })->all()
         );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->backend              = new Database();
-        $this->settingsRegistry     = new SettingsRegistry();
-        $this->settingRepository    = new SettingRepository($this->backend, $this->settingsRegistry);
-        $this->preferencesRegistry  = new PreferencesRegistry();
-        $this->preferenceRepository = new PreferenceRepository($this->backend, $this->preferencesRegistry);
-
-        $this->builder = new TreeBuilder($this->settingRepository, $this->preferenceRepository);
     }
 }

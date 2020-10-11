@@ -110,7 +110,6 @@ class UITreeTest extends \PHPUnit\Framework\TestCase
         $tree->findNode('Kia')->order    = 100;
         $tree->findNode('Nissan')->order = 99;
 
-
         $this->assertEquals(['Nissan', 'Kia', 'Toyota'], array_keys($tree->nodes()));
     }
 }

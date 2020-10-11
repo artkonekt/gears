@@ -19,6 +19,13 @@ class DatabaseBackendTest extends TestCase
     /** @var Backend */
     private $backend;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->backend = new Database();
+    }
+
     /**
      * @test
      */
@@ -120,7 +127,6 @@ class DatabaseBackendTest extends TestCase
         $this->backend->setPreference('font', 'Lato', 3);
         $this->backend->setPreference('weight', 300, 3);
         $this->backend->setPreference('size', 17, 3);
-
 
         $preferences = $this->backend->allPreferences(3);
         $this->assertCount(4, $preferences);
@@ -264,12 +270,5 @@ class DatabaseBackendTest extends TestCase
 
         $this->assertEquals('heroine', $this->backend->getPreference('prefers', $vincent));
         $this->assertEquals('twist', $this->backend->getPreference('dance', $vincent));
-    }
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->backend = new Database();
     }
 }

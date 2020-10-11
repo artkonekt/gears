@@ -21,6 +21,13 @@ class PreferencesRegistryTest extends \PHPUnit\Framework\TestCase
     /** @var PreferencesRegistry */
     private $registry;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->registry = new PreferencesRegistry();
+    }
+
     /**
      * @test
      */
@@ -119,12 +126,5 @@ class PreferencesRegistryTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(CustomPreference::class, $returnedPreference);
         $this->assertEquals('Default', $returnedPreference->default());
         $this->assertEquals('custom.preference', $returnedPreference->key());
-    }
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->registry = new PreferencesRegistry();
     }
 }

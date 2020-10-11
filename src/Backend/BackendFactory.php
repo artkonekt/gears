@@ -23,9 +23,9 @@ class BackendFactory
      *
      * @return Backend
      */
-    public static function create(string $driver) : Backend
+    public static function create(string $driver): Backend
     {
-        if (strpos($driver, '\\') === false) {
+        if (false === strpos($driver, '\\')) {
             $class = __NAMESPACE__ . '\\Drivers\\' . Str::studly($driver);
         } else {
             $class = $driver;

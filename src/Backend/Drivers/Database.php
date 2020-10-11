@@ -107,7 +107,6 @@ class Database implements Backend
         });
     }
 
-
     /**
      * @inheritDoc
      */
