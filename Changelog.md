@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.1
+##### 2020-10-31
+
+- Replaced the injection of `cache.store` to `cache` (CacheManager) in the CachedDatabase driver in
+  to improve compatibility with packages manipulating the cache,
+  eg. [Tenancy for Laravel](https://tenancyforlaravel.com/docs/v3/configuration#cache)
+
 ## 1.6.0
 ##### 2020-10-11
 
