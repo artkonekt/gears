@@ -11,7 +11,6 @@
 
 namespace Konekt\Gears\Tests;
 
-use Illuminate\Contracts\Cache\Repository;
 use Konekt\Gears\Backend\Drivers\CachedDatabase;
 use Konekt\Gears\Backend\Drivers\Database;
 use Konekt\Gears\Contracts\Backend;
@@ -30,7 +29,7 @@ class CacheDatabaseBackendTest extends TestCase
 
         $this->db      = new Database();
         $this->backend = new CachedDatabase(
-            $this->app->make(Repository::class),
+            $this->app->get('cache'),
             $this->db
         );
     }

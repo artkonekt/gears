@@ -11,7 +11,7 @@
 
 namespace Konekt\Gears\Backend\Drivers;
 
-use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Collection;
 use Konekt\Gears\Contracts\Backend;
 
@@ -24,10 +24,10 @@ class CachedDatabase implements Backend
     /** @var Database */
     protected $db;
 
-    /** @var Repository */
+    /** @var CacheManager */
     protected $cache;
 
-    public function __construct(Repository $cache, Database $db)
+    public function __construct(CacheManager $cache, Database $db)
     {
         $this->db    = $db;
         $this->cache = $cache;

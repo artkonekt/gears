@@ -11,7 +11,6 @@
 
 namespace Konekt\Gears\Tests;
 
-use Illuminate\Contracts\Cache\Repository;
 use Konekt\Gears\Backend\Drivers\CachedDatabase;
 use Konekt\Gears\Backend\Drivers\Database;
 use ReflectionMethod;
@@ -38,7 +37,7 @@ trait ConfiguresBackend
     private function getSettingCacheKey($key)
     {
         $cachedDbBackend = new CachedDatabase(
-            $this->app->make(Repository::class),
+            $this->app->get('cache'),
             new Database()
         );
 
