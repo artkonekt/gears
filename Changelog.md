@@ -1,9 +1,10 @@
 # Changelog
 
-## Unreleased
-##### 2020-XX-YY
+## 1.7.0
+##### 2020-12-07
 
 - Added PHP 8 support
+- Changed CI from travis to github actions
 
 ## 1.6.1
 ##### 2020-10-31
