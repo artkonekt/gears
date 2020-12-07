@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+##### 2020-XX-YY
+
+- Added PHP 8 support
+
 ## 1.6.1
 ##### 2020-10-31
 

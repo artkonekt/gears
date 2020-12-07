@@ -1,7 +1,6 @@
 # Settings & Preferences In Laravel Applications
 
-
-[![Travis Build Status](https://img.shields.io/travis/artkonekt/gears.svg?style=flat-square)](https://travis-ci.org/artkonekt/gears)
+[![Tests](https://img.shields.io/github/workflow/status/artkonekt/gears/tests/master?style=flat-square)](https://github.com/artkonekt/gears/actions?query=workflow%3Atests)
 [![Packagist Stable Version](https://img.shields.io/packagist/v/konekt/gears.svg?style=flat-square&label=stable)](https://packagist.org/packages/konekt/gears)
 [![StyleCI](https://styleci.io/repos/125667334/shield?branch=master)](https://styleci.io/repos/125667334)
 [![Packagist downloads](https://img.shields.io/packagist/dt/konekt/gears.svg?style=flat-square)](https://packagist.org/packages/konekt/gears)
@@ -14,7 +13,7 @@ This Laravel package allows you to manage and save/retrieve settings and prefere
 
 Settings and preferences are being managed separately. Values (by default) are being saved to the
 database (`settings` and `preferences` tables) and are cached with the
-[configured cache](https://laravel.com/docs/5.8/cache) for your application.
+[configured cache](https://laravel.com/docs/8.x/cache) for your application.
 
 The backend for storing the settings can be completely replaced, so it is possible to store them in
 anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
@@ -73,6 +72,8 @@ $settings->set('mailchimp.api_key', 'fbcdef');
 echo $settings->get('mailgun.api_key');
 // fbcdef
 ```
+
+To run the entire CI job suite locally: `act -P ubuntu-latest=shivammathur/node:latest`
 
 There are many more options and possibilities detailed in the
 [Documentation](https://konekt.dev/gears).
