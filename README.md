@@ -30,11 +30,12 @@ anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
 | 6.x     | 1.2+      |
 | 7.x     | 1.3+      |
 | 8.x     | 1.5+      |
+| 9.x     | 1.8+      |
 
 
 ## Installation
 
-> Minimum requirements (as of v1.6) are PHP 7.3 and Laravel 6
+> Minimum requirements (as of v1.8) are PHP 7.3 and Laravel 6
 
 Install with composer:
 

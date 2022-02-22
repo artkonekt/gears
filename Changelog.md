@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+##### 2022-02-XX
+
+- Added PHP 8.1 support
+- Added Laravel 9 support
+
 ## 1.7.0
 ##### 2020-12-07
 
