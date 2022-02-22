@@ -1,7 +1,7 @@
 # Changelog
 
-## Unreleased
-##### 2022-02-XX
+## 1.8.0
+##### 2022-02-22
 
 - Added PHP 8.1 support
 - Added Laravel 9 support
