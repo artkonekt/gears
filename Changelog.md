@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+##### 2022-03-XX
+
+- Added Enum v4 support
+- Dropped PHP 7.3 & 7.4 support
+- Dropped Laravel 6 & 7 support
+- Changed minimum Laravel version to 8.22.1, to enforce the [CVE-2021-21263](https://blog.laravel.com/security-laravel-62011-7302-8221-released) security patch
+
 ## 1.8.0
 ##### 2022-02-22
 

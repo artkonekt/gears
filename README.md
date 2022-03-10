@@ -35,7 +35,7 @@ anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
 
 ## Installation
 
-> Minimum requirements (as of v1.8) are PHP 7.3 and Laravel 6
+> Minimum requirements (as of v1.9) are PHP 8.0 and Laravel 8.22
 
 Install with composer:
 
