@@ -36,6 +36,7 @@ possible to store them anywhere else like MongoDB, ElasticSearch, Firebase, Dyna
 | 6.x     | 1.2+      |
 | 7.x     | 1.3+      |
 | 8.x     | 1.5+      |
+| 9.x     | 1.8+      |
 
 ---
 
