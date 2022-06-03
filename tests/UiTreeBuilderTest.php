@@ -336,7 +336,7 @@ class UiTreeBuilderTest extends TestCase
         $this->preferenceRepository->set('theme', 'Niro', $userWhite);
         $this->preferenceRepository->set('theme', 'Laney', $userGreen);
 
-        app()->singleton('gears.test.tree-builder', fn() => new TreeBuilder($this->settingRepository, $this->preferenceRepository));
+        app()->singleton('gears.test.tree-builder', fn () => new TreeBuilder($this->settingRepository, $this->preferenceRepository));
         app('gears.test.tree-builder')->addRootNode('general', __('General Settings'), 100)
             ->addChildNode('general', 'defaults', 'Defaults')
             ->addPreferenceItem(
