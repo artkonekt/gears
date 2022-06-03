@@ -19,30 +19,17 @@ use Konekt\Gears\Repository\SettingRepository;
 
 class TreeBuilder
 {
-    /** @var Tree */
-    protected $tree;
+    protected Tree $tree;
 
-    /** @var SettingRepository */
-    protected $settingRepository;
+    protected SettingRepository $settingRepository;
 
-    /** @var PreferenceRepository */
-    protected $preferenceRepository;
+    protected PreferenceRepository $preferenceRepository;
 
-    /** @var array|null */
-    protected $settings;
+    protected SettingsRegistry $settingsRegistry;
 
-    /** @var array|null */
-    protected $preferences;
+    protected PreferencesRegistry $preferencesRegistry;
 
-    /** @var SettingsRegistry */
-    protected $settingsRegistry;
-
-    /** @var PreferencesRegistry */
-    protected $preferencesRegistry;
-
-    /** @var bool */
-    protected $lazyLoad;
-
+    /** @param bool $lazyLoad @deprecated as of v1.10 */
     public function __construct(
         SettingRepository $settingRepository,
         PreferenceRepository $preferenceRepository,
@@ -54,14 +41,11 @@ class TreeBuilder
         $this->preferenceRepository = $preferenceRepository;
         $this->settingsRegistry     = $settingRepository->getRegistry();
         $this->preferencesRegistry  = $preferenceRepository->getRegistry();
-        $this->lazyLoad             = $lazyLoad;
     }
 
     public function getTree(): Tree
     {
-        if ($this->lazyLoad) {
-            $this->loadValues();
-        }
+        $this->loadValues();
 
         return $this->tree;
     }
@@ -116,14 +100,6 @@ class TreeBuilder
 
     protected function loadValues()
     {
-        if (!$this->settings) {
-            $this->settings = $this->settingRepository->all();
-        }
-
-        if (!$this->preferences) {
-            $this->preferences = $this->preferenceRepository->all();
-        }
-
         foreach ($this->tree->nodes() as $node) {
             $this->loadItemValues($node);
         }
@@ -136,59 +112,44 @@ class TreeBuilder
      */
     protected function findSettingByKey(string $key)
     {
-        if (!$this->settings && !$this->lazyLoad) {
-            $this->settings = $this->settingRepository->all();
-        }
-
         if ($setting = $this->settingsRegistry->get($key)) {
             return [
                 'object' => $setting,
-                'value'  => $this->settings[$key] ?? $setting->default()
+                'value'  => $this->settingRepository->get($key),
             ];
         }
 
         return null;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return array|null
-     */
-    protected function findPreferenceByKey(string $key)
+    protected function findPreferenceByKey(string $key): ?array
     {
-        if (!$this->preferences && !$this->lazyLoad) {
-            $this->preferences = $this->preferenceRepository->all();
-        }
-
         if ($preference = $this->preferencesRegistry->get($key)) {
             return [
                 'object' => $preference,
-                'value'  => $this->preferences[$key] ?? $preference->default()
+                'value'  => $this->preferenceRepository->get($key),
             ];
         }
 
         return null;
     }
 
-    private function loadItemValues(Node $node, $recursive = true)
+    private function loadItemValues(Node $node): void
     {
         /** @var BaseItem $item */
         foreach ($node->items() as $item) {
             switch ($item->getType()->value()) {
                 case CogType::SETTING:
-                    $item->setValue($this->settings[$item->getKey()] ?? $item->getDefaultValue());
+                    $item->setValue($this->settingRepository->get($item->getKey()));
                     break;
                 case CogType::PREFERENCE:
-                    $item->setValue($this->preferences[$item->getKey()] ?? $item->getDefaultValue());
+                    $item->setValue($this->preferenceRepository->get($item->getKey()));
                     break;
             }
         }
 
-        if ($recursive) {
-            foreach ($node->children() as $child) {
-                $this->loadItemValues($child);
-            }
+        foreach ($node->children() as $child) {
+            $this->loadItemValues($child);
         }
     }
 }

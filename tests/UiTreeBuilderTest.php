@@ -23,7 +23,6 @@ use Konekt\Gears\UI\PreferenceItem;
 use Konekt\Gears\UI\SettingItem;
 use Konekt\Gears\UI\Tree;
 use Konekt\Gears\UI\TreeBuilder;
-use PDOException;
 
 class UiTreeBuilderTest extends TestCase
 {
@@ -61,17 +60,13 @@ class UiTreeBuilderTest extends TestCase
         $this->builder = new TreeBuilder($this->settingRepository, $this->preferenceRepository);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_tree()
     {
         $this->assertInstanceOf(Tree::class, $this->builder->getTree());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function root_level_nodes_can_be_added()
     {
         $this->builder->addRootNode('abc', 'Abc Label');
@@ -84,9 +79,7 @@ class UiTreeBuilderTest extends TestCase
         $this->assertEquals($node, $tree->findNode('abc'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function child_nodes_can_be_added()
     {
         $this->builder->addRootNode('parent', 'Tatal nostru');
@@ -97,9 +90,7 @@ class UiTreeBuilderTest extends TestCase
         $this->assertInstanceOf(Node::class, $tree->findNode('child', true));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function setting_items_can_be_added()
     {
         $this->settingsRegistry->addByKey('my_setting1');
@@ -123,9 +114,7 @@ class UiTreeBuilderTest extends TestCase
         $this->assertTrue(CogType::SETTING()->equals($item2->getType()));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function preference_items_can_be_added()
     {
         $this->preferencesRegistry->addByKey('my_pref1');
@@ -148,52 +137,7 @@ class UiTreeBuilderTest extends TestCase
         $this->assertTrue(CogType::PREFERENCE()->equals($item2->getType()));
     }
 
-    /**
-     * @test
-     */
-    public function settings_values_are_lazy_loaded()
-    {
-        $this->settingsRegistry->addByKey('lazy_midafaki');
-
-        // Drop the table
-        $this->app['db']->connection()->getSchemaBuilder()->drop('settings');
-
-        $this->builder->addRootNode('tab');
-
-        // No table read should happen here
-        $this->builder->addSettingItem('tab', 'text', 'lazy_midafaki');
-
-        // Table read should only happen when getting the tree
-        $this->expectException(PDOException::class);
-        $this->builder->getTree();
-    }
-
-    /**
-     * @test
-     */
-    public function preference_values_are_lazy_loaded()
-    {
-        $user = User::create(['email' => 'user@muki.com']);
-        $this->be($user);
-
-        $this->preferencesRegistry->addByKey('lazy_usermuki');
-
-        // Drop the table
-        $this->app['db']->connection()->getSchemaBuilder()->drop('preferences');
-
-        $this->builder->addRootNode('tab');
-
-        // No table read should happen here
-        $this->builder->addPreferenceItem('tab', 'text', 'lazy_usermuki');
-
-        // Table read should only happen when getting the tree
-        $this->expectException(PDOException::class);
-        $this->builder->getTree();
-    }
-
-    /**
-     * @test
-     */
+    /** @test */
     public function it_loads_all_the_setting_values_in_any_depth()
     {
         $this->settingsRegistry->addByKey('setting10');
@@ -238,9 +182,7 @@ class UiTreeBuilderTest extends TestCase
         $this->assertEquals('value30', $tree->findNode('tab3', true)->findItemByKey('setting30')->getValue());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_loads_all_the_preference_values_in_any_depth()
     {
         $user = User::create(['email' => 'duro.dora@marnemjobbik.hu']);
@@ -289,9 +231,7 @@ class UiTreeBuilderTest extends TestCase
         $this->assertEquals('valueD2', $tree->findNode('tabD', true)->findItemByKey('prefD2')->getValue());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function setting_and_preference_items_can_be_added_to_the_same_tree()
     {
         $user = User::create(['email' => 'borat@bruno.ali-g.kz']);
@@ -340,9 +280,7 @@ class UiTreeBuilderTest extends TestCase
         $this->assertEquals('valueC3', $tree->findNode('tabC', true)->findItemByKey('preferenceC3')->getValue());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function order_of_nodes_can_be_specified()
     {
         $this->builder->addRootNode('abc', 'Abc Label', 20);
@@ -358,9 +296,7 @@ class UiTreeBuilderTest extends TestCase
         $this->assertEquals(['BBB', 'AAA'], array_keys($tree->findNode('abc')->children()));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function order_of_items_can_be_specified()
     {
         $this->settingsRegistry->addByKey('habits');
@@ -380,5 +316,58 @@ class UiTreeBuilderTest extends TestCase
                 return $item->getKey();
             })->all()
         );
+    }
+
+    /** @test */
+    public function it_fetches_the_right_preferences_when_using_as_singleton()
+    {
+        $userRed = User::create(['email' => 'robert@red.ford']);
+        $userWhite = User::create(['email' => 'robert@de.niro']);
+        $userGreen = User::create(['email' => 'robert@de.laney']);
+
+        $this->preferencesRegistry->addByKey('color');
+        $this->preferencesRegistry->addByKey('theme');
+
+        $this->preferenceRepository->set('color', 'red', $userRed);
+        $this->preferenceRepository->set('color', 'white', $userWhite);
+        $this->preferenceRepository->set('color', 'green', $userGreen);
+
+        $this->preferenceRepository->set('theme', 'Ford', $userRed);
+        $this->preferenceRepository->set('theme', 'Niro', $userWhite);
+        $this->preferenceRepository->set('theme', 'Laney', $userGreen);
+
+        app()->singleton('gears.test.tree-builder', fn() => new TreeBuilder($this->settingRepository, $this->preferenceRepository));
+        app('gears.test.tree-builder')->addRootNode('general', __('General Settings'), 100)
+            ->addChildNode('general', 'defaults', 'Defaults')
+            ->addPreferenceItem(
+                'defaults',
+                ['select', ['label' => 'Color']],
+                'color'
+            )
+            ->addPreferenceItem(
+                'defaults',
+                ['select', ['label' => 'Theme']],
+                'theme'
+            );
+
+        $this->assertInstanceOf(TreeBuilder::class, app()->get('gears.test.tree-builder'));
+
+        $this->actingAs($userRed);
+        /** @var Tree $tree */
+        $tree = app('gears.test.tree-builder')->getTree();
+        $this->assertEquals($tree->findNode('defaults', true)->findItemByKey('color')->getValue(), 'red');
+        $this->assertEquals($tree->findNode('defaults', true)->findItemByKey('theme')->getValue(), 'Ford');
+
+        $this->actingAs($userWhite);
+        /** @var Tree $tree */
+        $tree = app('gears.test.tree-builder')->getTree();
+        $this->assertEquals($tree->findNode('defaults', true)->findItemByKey('color')->getValue(), 'white');
+        $this->assertEquals($tree->findNode('defaults', true)->findItemByKey('theme')->getValue(), 'Niro');
+
+        $this->actingAs($userGreen);
+        /** @var Tree $tree */
+        $tree = app('gears.test.tree-builder')->getTree();
+        $this->assertEquals($tree->findNode('defaults', true)->findItemByKey('color')->getValue(), 'green');
+        $this->assertEquals($tree->findNode('defaults', true)->findItemByKey('theme')->getValue(), 'Laney');
     }
 }

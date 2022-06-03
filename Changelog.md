@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+##### 2022-XX-YY
+
+- Removed the (undocumented) internal lazy load mechanism from the UI Tree Builder to fix issue with Octane
+
 ## 1.9.0
 ##### 2022-03-10
 
