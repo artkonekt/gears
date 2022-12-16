@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void forget(string $key, $user = null)
  * @method static array all($user = null)
  * @method static void update(array $settings, $user = null)
- * @method static void delete(array $keys, $user = null)
+ * @method static void reset(array $keys, $user = null)
  */
 class Preferences extends Facade
 {

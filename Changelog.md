@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+##### 2022-12-YY
+
+- Fixed invalid `delete` annotations on `Settings` and `Preferences` facades
+- Added PHP 8.2 support
+
 ## 1.10.0
 ##### 2022-06-03
 
