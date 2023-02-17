@@ -2,7 +2,7 @@
 
 return [
     // To use a custom backend driver, set the class:
-    // @see https://konekt.dev/gears/1.4/custom-backend
+    // @see https://konekt.dev/gears/1.x/custom-backend
     //'driver' => YourCustomBackendDriver::class,
 
     // To disable the migrations, set this to false:

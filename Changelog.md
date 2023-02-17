@@ -1,7 +1,7 @@
 # Changelog
 
-## Unreleased
-##### 2022-12-YY
+## 1.11.0
+##### 2023-02-17
 
 - Added Laravel 10 support
 - Added PHP 8.2 support
