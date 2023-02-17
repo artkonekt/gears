@@ -3,8 +3,9 @@
 ## Unreleased
 ##### 2022-12-YY
 
-- Fixed invalid `delete` annotations on `Settings` and `Preferences` facades
+- Added Laravel 10 support
 - Added PHP 8.2 support
+- Fixed invalid `delete` annotations on `Settings` and `Preferences` facades
 - Dropped Laravel 8 support
 
 ## 1.10.0
