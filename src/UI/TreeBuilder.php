@@ -37,8 +37,7 @@ class TreeBuilder
         protected SettingRepository $settingRepository,
         protected PreferenceRepository $preferenceRepository,
         bool $lazy = true,
-    )
-    {
+    ) {
         $this->tree = new Tree();
 
         $this->settingsRegistry = $this->settingRepository->getRegistry();
@@ -139,7 +138,7 @@ class TreeBuilder
         if ($setting = $this->settingsRegistry->get($key)) {
             return [
                 'object' => $setting,
-                'value' => $this->settingValuesCache[$key] ?? $setting->default(),
+                'value'  => $this->settingValuesCache[$key] ?? $setting->default(),
             ];
         }
 
@@ -155,7 +154,7 @@ class TreeBuilder
         if ($preference = $this->preferencesRegistry->get($key)) {
             return [
                 'object' => $preference,
-                'value' => $this->preferenceValuesCache[$key] ?? $preference->default(),
+                'value'  => $this->preferenceValuesCache[$key] ?? $preference->default(),
             ];
         }
 

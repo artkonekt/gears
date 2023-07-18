@@ -177,7 +177,6 @@ class UiTreeBuilderTest extends TestCase
         $this->builder->getTree();
     }
 
-
     /** @test */
     public function it_loads_all_the_setting_values_in_any_depth()
     {
