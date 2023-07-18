@@ -1,7 +1,7 @@
 # Changelog
 
-## Unreleased
-##### 2023-XX-YY
+## 1.12.0
+##### 2023-07-18
 
 - Reverted an improved version of the TreeBuilder's lazy loading mechanism so that it is always active
 - Fixed the premature access of TreeBuilder's backend when using it along with AppShell
