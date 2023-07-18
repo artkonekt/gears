@@ -11,6 +11,7 @@
 
 namespace Konekt\Gears\UI;
 
+use Illuminate\Support\Facades\Auth;
 use Konekt\Gears\Enums\CogType;
 use Konekt\Gears\Registry\PreferencesRegistry;
 use Konekt\Gears\Registry\SettingsRegistry;
@@ -21,26 +22,30 @@ class TreeBuilder
 {
     protected Tree $tree;
 
-    protected SettingRepository $settingRepository;
+    protected ?array $settingValuesCache = null;
 
-    protected PreferenceRepository $preferenceRepository;
+    protected ?array $preferenceValuesCache = null;
+
+    protected ?string $userIdOfPreferencesCache = null;
 
     protected SettingsRegistry $settingsRegistry;
 
     protected PreferencesRegistry $preferencesRegistry;
 
-    /** @param bool $lazyLoad @deprecated as of v1.10 */
+    /** @param bool $lazyLoad @deprecated as of v1.10 and has no effect */
     public function __construct(
-        SettingRepository $settingRepository,
-        PreferenceRepository $preferenceRepository,
-        bool $lazyLoad = true
-    ) {
+        protected SettingRepository $settingRepository,
+        protected PreferenceRepository $preferenceRepository,
+        bool $lazy = true,
+    )
+    {
         $this->tree = new Tree();
 
-        $this->settingRepository    = $settingRepository;
-        $this->preferenceRepository = $preferenceRepository;
-        $this->settingsRegistry     = $settingRepository->getRegistry();
-        $this->preferencesRegistry  = $preferenceRepository->getRegistry();
+        $this->settingsRegistry = $this->settingRepository->getRegistry();
+        $this->preferencesRegistry = $this->preferenceRepository->getRegistry();
+        if (false === $lazy) {
+            trigger_error('The `$lazy` parameter is deprecated in the TreeBuilder\s constructor, and has no effect', E_USER_DEPRECATED);
+        }
     }
 
     public function getTree(): Tree
@@ -98,8 +103,23 @@ class TreeBuilder
         return $this;
     }
 
+    public function bustCache(): void
+    {
+        $this->settingValuesCache = null;
+        $this->preferenceValuesCache = null;
+        $this->userIdOfPreferencesCache = null;
+    }
+
     protected function loadValues()
     {
+        if ($this->needsToLoadPreferenceValues()) {
+            $this->fetchSettingValues();
+        }
+
+        if ($this->needsToLoadPreferenceValues()) {
+            $this->fetchPreferenceValues();
+        }
+
         foreach ($this->tree->nodes() as $node) {
             $this->loadItemValues($node);
         }
@@ -112,10 +132,14 @@ class TreeBuilder
      */
     protected function findSettingByKey(string $key)
     {
+        if ($this->needsToLoadSettingValues(deferable: true)) {
+            $this->fetchSettingValues();
+        }
+
         if ($setting = $this->settingsRegistry->get($key)) {
             return [
                 'object' => $setting,
-                'value'  => $this->settingRepository->get($key),
+                'value' => $this->settingValuesCache[$key] ?? $setting->default(),
             ];
         }
 
@@ -124,10 +148,14 @@ class TreeBuilder
 
     protected function findPreferenceByKey(string $key): ?array
     {
+        if ($this->needsToLoadPreferenceValues(deferable: true)) {
+            $this->fetchPreferenceValues();
+        }
+
         if ($preference = $this->preferencesRegistry->get($key)) {
             return [
                 'object' => $preference,
-                'value'  => $this->preferenceRepository->get($key),
+                'value' => $this->preferenceValuesCache[$key] ?? $preference->default(),
             ];
         }
 
@@ -140,10 +168,10 @@ class TreeBuilder
         foreach ($node->items() as $item) {
             switch ($item->getType()->value()) {
                 case CogType::SETTING:
-                    $item->setValue($this->settingRepository->get($item->getKey()));
+                    $item->setValue($this->settingValuesCache[$item->getKey()] ?? $item->getDefaultValue());
                     break;
                 case CogType::PREFERENCE:
-                    $item->setValue($this->preferenceRepository->get($item->getKey()));
+                    $item->setValue($this->preferenceValuesCache[$item->getKey()] ?? $item->getDefaultValue());
                     break;
             }
         }
@@ -151,5 +179,30 @@ class TreeBuilder
         foreach ($node->children() as $child) {
             $this->loadItemValues($child);
         }
+    }
+
+    private function needsToLoadSettingValues(bool $deferable = false): bool
+    {
+        return is_null($this->settingValuesCache) && !$deferable;
+    }
+
+    private function fetchSettingValues(): void
+    {
+        $this->settingValuesCache = $this->settingRepository->all();
+    }
+
+    private function needsToLoadPreferenceValues(bool $deferable = false): bool
+    {
+        if ($deferable) {
+            return !is_null($this->userIdOfPreferencesCache) && $this->userIdOfPreferencesCache !== (string) Auth::id();
+        }
+
+        return is_null($this->preferenceValuesCache) || $this->userIdOfPreferencesCache !== (string) Auth::id();
+    }
+
+    private function fetchPreferenceValues(): void
+    {
+        $this->preferenceValuesCache = $this->preferenceRepository->all();
+        $this->userIdOfPreferencesCache = (string) Auth::id();
     }
 }

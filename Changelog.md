@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+##### 2023-XX-YY
+
+- Reverted an improved version of the TreeBuilder's lazy loading mechanism so that it is always active
+- Fixed the premature access of TreeBuilder's backend when using it along with AppShell
+- Improved the TreeBuilder's cache invalidation by detecting if a user was changed for cached preferences
+- Fixed possible TreeBuilder stale data with Octane, that was fixed in v1.10, but caused premature backend access issues with AppShell
+- Added the `bustCache()` method to the TreeBuilder class
+
 ## 1.11.0
 ##### 2023-02-17
 

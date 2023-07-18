@@ -23,6 +23,7 @@ use Konekt\Gears\UI\PreferenceItem;
 use Konekt\Gears\UI\SettingItem;
 use Konekt\Gears\UI\Tree;
 use Konekt\Gears\UI\TreeBuilder;
+use PDOException;
 
 class UiTreeBuilderTest extends TestCase
 {
@@ -136,6 +137,46 @@ class UiTreeBuilderTest extends TestCase
         $this->assertTrue(CogType::PREFERENCE()->equals($item1->getType()));
         $this->assertTrue(CogType::PREFERENCE()->equals($item2->getType()));
     }
+
+    /** @test */
+    public function settings_values_are_lazy_loaded()
+    {
+        $this->settingsRegistry->addByKey('lazy_midafaki');
+
+        // Drop the table
+        $this->app['db']->connection()->getSchemaBuilder()->drop('settings');
+
+        $this->builder->addRootNode('tab');
+
+        // No table read should happen here
+        $this->builder->addSettingItem('tab', 'text', 'lazy_midafaki');
+
+        // Table read should only happen when getting the tree
+        $this->expectException(PDOException::class);
+        $this->builder->getTree();
+    }
+
+    /** @test */
+    public function preference_values_are_lazy_loaded()
+    {
+        $user = User::create(['email' => 'user@muki.com']);
+        $this->be($user);
+
+        $this->preferencesRegistry->addByKey('lazy_usermuki');
+
+        // Drop the table
+        $this->app['db']->connection()->getSchemaBuilder()->drop('preferences');
+
+        $this->builder->addRootNode('tab');
+
+        // No table read should happen here
+        $this->builder->addPreferenceItem('tab', 'text', 'lazy_usermuki');
+
+        // Table read should only happen when getting the tree
+        $this->expectException(PDOException::class);
+        $this->builder->getTree();
+    }
+
 
     /** @test */
     public function it_loads_all_the_setting_values_in_any_depth()
