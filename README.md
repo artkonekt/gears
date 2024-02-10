@@ -20,22 +20,24 @@ anywhere else like MongoDB, ElasticSearch, Firebase, DynamoDB, S3, etc.
 
 ## Laravel Compatibility
 
-| Laravel | Gears     |
-|:--------|:----------|
-| 5.4     | 0.9 - 1.1 |
-| 5.5     | 0.9 - 1.2 |
-| 5.6     | 0.9 - 1.2 |
-| 5.7     | 1.1 - 1.2 |
-| 5.8     | 1.2 - 1.5 |
-| 6.x     | 1.2+      |
-| 7.x     | 1.3+      |
-| 8.x     | 1.5+      |
-| 9.x     | 1.8+      |
+| Laravel | Gears      |
+|:--------|:-----------|
+| 5.4     | 0.9 - 1.1  |
+| 5.5     | 0.9 - 1.2  |
+| 5.6     | 0.9 - 1.2  |
+| 5.7     | 1.1 - 1.2  |
+| 5.8     | 1.2 - 1.5  |
+| 6.x     | 1.2 - 1.9  |
+| 7.x     | 1.3 - 1.9  |
+| 8.x     | 1.5 - 1.11 |
+| 9.x     | 1.8 - 1.12 |
+| 10.x    | 1.11+      |
+| 11.x    | 1.13+      |
 
 
 ## Installation
 
-> Minimum requirements (as of v1.11) are PHP 8.0 and Laravel 9.22
+> Minimum requirements (as of v1.13) are PHP 8.1 and Laravel 10.0
 
 Install with composer:
 
