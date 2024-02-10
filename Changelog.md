@@ -1,7 +1,7 @@
 # Changelog
 
-## Unreleased
-##### 2024-XX-YY
+## 1.13.0
+##### 2024-02-10
 
 - Added Laravel 11 support
 - Dropped Laravel 9 support
