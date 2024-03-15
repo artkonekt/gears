@@ -9,7 +9,7 @@ into a tree or a tree-like nodes like menus, tabs, groups.
 
 A **Tree** contains nodes and items:
 
-```
+```text
 Tree
 │
 └─> Node
