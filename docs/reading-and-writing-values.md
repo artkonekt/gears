@@ -24,7 +24,16 @@ echo $settings->get('mailgun.api_key');
 
 > **Note:** `app('gears.settings')` and the `Settings` facade refer to the same instance.
 
-#### Setting/Getting Multiple Settings At Once
+## Helper Functions And Blade Templates
+
+In Blade templates people rarely want OOP code, here you can utilize the helper functions:
+
+```blade
+<h1>{{ $product->title }}</>
+<p>{{ $product->price }} {{ setting('shop.currency') }}</p>
+```
+
+## Setting/Getting Multiple Settings At Once
 
 ```php
 use Konekt\Gears\Defaults\SimpleSetting;
@@ -138,6 +147,17 @@ echo Preferences::get('color_scheme');
 Preferences::forget('color_scheme', $userId);
 var_dump(Preferences::get('color_scheme', $userId));
 // NULL
+```
+
+## Preferences in Blade Templates
+
+In blade templates, preferences can be retrieved with the `preference()` helper function,
+similarly to the `setting()` function:
+
+
+```blade
+<body @class(['is-dark' => preference('dark_mode')])>
+</body>
 ```
 
 ## Saving And Retrieving Multiple Preferences At Once
