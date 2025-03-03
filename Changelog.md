@@ -1,7 +1,7 @@
 # Changelog
 
-## Unreleased
-##### 2025-XX-YY
+## 1.14.0
+##### 2025-03-03
 
 - Added Laravel 12 support
 - Added PHP 8.4 support
