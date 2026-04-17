@@ -1,6 +1,7 @@
 # Installation
 
-> Minimum requirements (as of v1.13) are PHP 8.1 and Laravel 10.0
+> Minimum requirements (as of v1.15) are PHP 8.3 and Laravel 11.46.2.  
+> Earlier releases support older PHP (down to 7.0) and Laravel (down to 5.4) versions.
 
 Install with composer:
 
